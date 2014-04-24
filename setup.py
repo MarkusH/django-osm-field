@@ -18,7 +18,7 @@ readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 setup(
-    name='osm_field',
+    name='django-osm-field',
     version='0.0.0',
     description='Django OpenStreetMap Field',
     long_description=readme + '\n\n' + history,
@@ -30,10 +30,10 @@ setup(
     ],
     package_dir={'osm_field': 'osm_field'},
     include_package_data=True,
-    install_requires=[],
+    install_requires=['six'],
     license="BSD",
     zip_safe=False,
-    keywords='osm_field',
+    keywords='OpenStreetMap, OSM, Django, Geo, Geoposition',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
