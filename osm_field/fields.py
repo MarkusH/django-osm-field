@@ -9,6 +9,8 @@ from django.db.models.fields import TextField, FloatField
 from django.utils.encoding import force_text, python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
+from .forms import OSMWidget
+
 
 def validate_latitude(value):
     if value < -90 or value > 90:
@@ -90,6 +92,12 @@ class OSMField(six.with_metaclass(models.SubfieldBase, TextField)):
                 getattr(self, text_name),
             )
         setattr(cls, name, property(_func))
+
+    def formfield(self, **kwargs):
+        kwargs.update({
+            'widget': OSMWidget,
+        })
+        return super(OSMField, self).formfield(**kwargs)
 
 
 try:
