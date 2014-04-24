@@ -102,6 +102,12 @@ class OSMField(six.with_metaclass(models.SubfieldBase, TextField)):
 
 try:
     from south.modelsinspector import add_introspection_rules
-    add_introspection_rules([], ["^osm_field\.fields\.OSMField"])
+    add_introspection_rules(
+        [],
+        [
+            "^osm_field\.fields\.LatitudeField",
+            "^osm_field\.fields\.LongitudeField",
+            "^osm_field\.fields\.OSMField",
+        ])
 except ImportError:
     pass
