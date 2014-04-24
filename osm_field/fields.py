@@ -74,8 +74,7 @@ class OSMField(six.with_metaclass(models.SubfieldBase, TextField)):
         super(OSMField, self).__init__(*args, **kwargs)
 
     def contribute_to_class(self, cls, name):
-        text_name = name + "_text"
-        super(OSMField, self).contribute_to_class(cls, text_name)
+        super(OSMField, self).contribute_to_class(cls, name)
         lat = LatitudeField(_('Latitude'), blank=self.geo_blank,
             null=self.geo_null, validators=[validate_latitude])
         lat_name = name + "_lat"
@@ -89,9 +88,9 @@ class OSMField(six.with_metaclass(models.SubfieldBase, TextField)):
             return Location(
                 getattr(self, lat_name),
                 getattr(self, lon_name),
-                getattr(self, text_name),
+                getattr(self, name),
             )
-        setattr(cls, name, property(_func))
+        setattr(cls, 'get_%s_info' % name, _func)
 
     def formfield(self, **kwargs):
         kwargs.update({
