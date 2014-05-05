@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width" />
+	<title>Location Picker</title>
+
+	<link rel="stylesheet" href="css/vendor/leaflet.css">
+	<link rel="stylesheet" href="css/osm_field.css">
+	<script src="js/vendor/jquery-2.1.0.min.js"></script>
+	<script src="js/vendor/leaflet.js"></script>
+	<script src="js/osm_field.js"></script>
+
+	<style type="text/css">
+		html { background-color: #ddd; font-family: sans-serif; }
+		body { margin: 2em 0 2em 2em; width: 40em; background-color: #fff; padding:2em; }
+
+		p { padding: 0; line-height: 1.4em; text-align: justify; margin: 0.5em 0; }
+		pre { background-color: #444; color: #eee; padding: 0.8em 1em; margin: 0.8em 0; }
+		h1 { margin: 0; }
+		h2 { margin: 1em 0 0 0; }
+	</style>
+
+	<script type="application/javascript">
+		$(function() {
+			$('.osmfield').osmfield();
+
+			$('button#getvalues').click(function() {
+				$('pre#values').text(
+					'address: '+$('#picker').val()+'\n'+
+					'lat: '+$('#picker').attr('data-osmfield-lat')+'\n'+
+					'lng: '+$('#picker').attr('data-osmfield-lng')
+				);
+			});
+
+		});
+	</script>
+</head>
+
+
+<body>
+
+<h1>osmfield jQuery plugin</h1>
+<p>The jQuery osmfield plugin is a geolocation picker that turns any INPUT element into a position locator. Type in the address. If the <a href="http://wiki.openstreetmap.org/wiki/Nominatim">OpenStreetMap Nominatim API</a> finds matching coordinates, a map will be shown. You can correct the location here now or type another address. Finally, the Address and coordinates will be saved in the original INPUT element. The dependencies are <a href="http://leafletjs.com/">Leaflet</a> and <a href="http://jquery.com/">jQuery</a>.</p>
+
+<p><a href="https://github.com/sinnwerkstatt">Download on Github</a></p>
+
+<h2>Simple osmfield</h2>
+<p>Let's start with jQuery, Leaflet, the Plugin and some lines CSS…</p>
+
+<pre>&lt;link rel=&quot;stylesheet&quot; href=&quot;leaflet.css&quot;&gt;
+&lt;script src=&quot;jquery-2.1.0.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;leaflet.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;osmfield.js&quot;&gt;&lt;/script&gt;
+
+&lt;style type=&quot;text/css&quot;&gt;
+div.osmfield-map {
+  width: 350px;
+  height: 250px;
+  border: 1px solid black;
+  position:absolute;
+  left:0;
+  top:30px;
+  z-index:1000;
+}
+span.osmfield-wrapper {
+  position:relative;
+}
+&lt;/style&gt;</pre>
+
+<p>…add the INPUT element…</p>
+
+<pre>&lt;input class=&quot;osmfield&quot; /&gt;</pre>
+
+<p>…and now initalize everything.</p>
+
+<pre>&lt;script type=&quot;application/javascript&quot;&gt;
+$(function() {
+  $(&#39;.osmfield&#39;).osmfield();
+});
+&lt;/script&gt;</pre>
+
+<p>Try it! Type Berlin or something.</p>
+
+<p><input class="osmfield" /></p>
+
+
+<h2>osmfield with address</h2>
+<p>Set a default address.</p>
+<pre>&lt;input class=&quot;osmfield&quot; value=&quot;Thinkfarm Berlin&quot; /&gt;</pre>
+<input value="Thinkfarm Berlin" class="osmfield" />
+
+<h2>osmfield with address and geo coordinates</h2>
+<p>In this example, the geo coordinates are already given on initialization. They do not have to match the address.</p>
+<pre>&lt;input value=&quot;Thinkfarm Berlin&quot;
+data-osmfield-lat=&quot;41.6147605&quot;
+data-osmfield-lng=&quot;0.6267842&quot;
+class=&quot;osmfield&quot; /&gt;</pre>
+<input value="Thinkfarm Berlin" data-osmfield-lat="41.6147605" data-osmfield-lng="0.6267842" class="osmfield" />
+
+
+<h2>osmfield with just geo coordinates</h2>
+<pre>&lt;input
+data-osmfield-lat=&quot;41.6147605&quot;
+data-osmfield-lng=&quot;0.6267842&quot;
+class=&quot;osmfield&quot; /&gt;</pre>
+<p>Works but does not make sense.</p>
+<input data-osmfield-lat="41.6147605" data-osmfield-lng="0.6267842" class="osmfield" />
+
+<h2>German osmfield</h2>
+<pre>&lt;input class=&quot;osmfield&quot; lang=&quot;de&quot; value=&quot;Thinkfarm Berlin&quot; /&gt;</pre>
+<p><em>United Kingdom</em> or <em>Vereinigtes Königreich Großbritannien und Nordirland</em>? Usually you have a document wide setting like <em>&lt;html lang=&quot;en-US&quot;&gt;</em>. osmfield uses the language that is set nearest to it.</p>
+<input value="Vereinigtes Königreich Großbritannien und Nordirland" lang="de" class="osmfield" />
+
+
+<h2>Use the data</h2>
+<pre>&lt;script type=&quot;application/javascript&quot;&gt;
+$(function() {
+
+  $(&#39;button#getvalues&#39;).click(function() {
+    $(&#39;pre#values&#39;).text(
+      &#39;address: &#39;+$(&#39;#picker&#39;).val()+&#39;\n&#39;+
+      &#39;lat: &#39;+$(&#39;#picker&#39;).attr(&#39;data-osmfield-lat&#39;)+&#39;\n&#39;+
+      &#39;lng: &#39;+$(&#39;#picker&#39;).attr(&#39;data-osmfield-lng&#39;)
+    );
+  });
+
+});
+&lt;/script&gt;
+
+&lt;input class=&quot;osmfield&quot; value=&quot;Thinkfarm Berlin&quot; id=&quot;picker&quot; /&gt;</pre>
+<p>You can read the address and geo coordinates whenever you want. If no coordinates are found for the specific address, the corresponding attributes aren't set. This even works without user interaction simply after initailzation. Click the button.</p>
+<input value="Thinkfarm Berlin" class="osmfield" id="picker" />
+<button id="getvalues" />Get me the values!</button>
+<pre id="values"></pre>
+
+</body>
+</html>
