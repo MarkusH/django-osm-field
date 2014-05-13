@@ -1,27 +1,51 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.forms.widgets import Textarea
+from django.forms.widgets import TextInput
+from django.utils.html import format_html
 
 
 def _get_js():
     from django.conf import settings
+    base = ['js/vendor/jquery-2.1.0.min.js', 'js/vendor/leaflet.js']
     if settings.configured and settings.DEBUG:
-        return ('js/osm_field.js', )
+        base.extend(['js/osm_field.js'])
     else:
-        return ('js/osm_field.min.js', )
+        base.extend(['js/osm_field.min.js'])
+    return base
 
 
 def _get_css():
     from django.conf import settings
+    base = ['css/vendor/leaflet.css']
     if settings.configured and settings.DEBUG:
-        return ('css/osm_field.css', )
+        base.extend(['css/osm_field.css'])
     else:
-        return ('css/osm_field.min.css', )
+        base.extend(['css/osm_field.min.css'])
+    return base
 
 
-class OSMWidget(Textarea):
+class OSMWidget(TextInput):
 
     class Media:
         css = {'screen': _get_css()}
         js = _get_js()
+
+    def __init__(self, attrs=None):
+        attrs = {} if attrs is None else attrs.copy()
+        if 'class' in attrs:
+            attrs['class'] += ' osmfield'
+        else:
+            attrs['class'] = 'osmfield'
+        super(OSMWidget, self).__init__(attrs=attrs)
+
+    def render(self, name, value, attrs=None):
+        ret = super(OSMWidget, self).render(name, value, attrs=attrs)
+        id_ = attrs['id']
+        ret += self.render_osmfield(id_)
+        return ret
+
+    def render_osmfield(self, id_):
+        # we need {{ and }} because of .format() working with {}
+        return format_html('<script type="application/javascript">$(function()'
+                           '{{$("#{0}").osmfield();}});</script>', id_)

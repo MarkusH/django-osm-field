@@ -32,10 +32,10 @@ class Location(object):
 
     def __str__(self):
         out = []
-        if not (self.lat is None or self.lon is None):
-            out.append('(%f, %f)' % (self.lat, self.lon))
         if not self.text is None:
             out.append(self.text)
+        if not (self.lat is None or self.lon is None):
+            out.append('(%f, %f)' % (self.lat, self.lon))
         return ' '.join(out) or ''
 
     def __repr__(self):
