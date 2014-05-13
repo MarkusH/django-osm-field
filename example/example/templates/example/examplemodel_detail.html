@@ -1,0 +1,12 @@
+{% extends "example/base.html" %}
+
+{% block content %}
+<ul>
+  <li>{{ object.location }}</li>
+  <li>{{ object.location_lat }}</li>
+  <li>{{ object.location_lon }}</li>
+</ul>
+
+<a href="{% url 'delete' pk=object.pk %}">Delete</a>
+<a href="{% url 'update' pk=object.pk %}">Update</a>
+{% endblock %}
