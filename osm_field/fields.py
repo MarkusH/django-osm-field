@@ -75,22 +75,26 @@ class OSMField(six.with_metaclass(models.SubfieldBase, TextField)):
 
     def contribute_to_class(self, cls, name):
         super(OSMField, self).contribute_to_class(cls, name)
-        lat = LatitudeField(_('Latitude'), blank=self.geo_blank,
-            null=self.geo_null, validators=[validate_latitude])
         lat_name = name + "_lat"
-        lon = LongitudeField(_('Longitude'), blank=self.geo_blank,
-            null=self.geo_null, validators=[validate_longitude])
+        if not lat_name in cls._meta.fields:
+            lat = LatitudeField(_('Latitude'), blank=self.geo_blank,
+                null=self.geo_null, validators=[validate_latitude])
+            lat.contribute_to_class(cls, lat_name)
         lon_name = name + "_lon"
-        lat.contribute_to_class(cls, lat_name)
-        lon.contribute_to_class(cls, lon_name)
+        if not lon_name in cls._meta.fields:
+            lon = LongitudeField(_('Longitude'), blank=self.geo_blank,
+                null=self.geo_null, validators=[validate_longitude])
+            lon.contribute_to_class(cls, lon_name)
 
-        def _func(self):
-            return Location(
-                getattr(self, lat_name),
-                getattr(self, lon_name),
-                getattr(self, name),
-            )
-        setattr(cls, 'get_%s_info' % name, _func)
+        info_name = 'get_%s_info' % name
+        if not hasattr(cls, info_name):
+            def _func(self):
+                return Location(
+                    getattr(self, lat_name),
+                    getattr(self, lon_name),
+                    getattr(self, name),
+                )
+            setattr(cls, info_name, _func)
 
     def formfield(self, **kwargs):
         kwargs.update({
