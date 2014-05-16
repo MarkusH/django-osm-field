@@ -1,22 +1,32 @@
 // TODO: README.md
 // TODO: License
+// TODO: explain names
 
 (function($) {
 	$.fn.osmfield = function() {
 
 		return this.each(function() {
 			// Create HTML elements for osmfield
-			$(this)
-				.addClass('osmfield-address')
-				.wrap('<span class="osmfield-wrapper"></span>')
-				.parent()
-				.append('<div class="osmfield-map"></div>');
+			$(this).addClass('osmfield');
+			var nameAttribute = $(this).find('.osmfield-address').attr('name');
+			if (!nameAttribute) nameAttribute = 'osmfield';
 
-			var osmfieldElement = $(this).parent();
+			if (!$(this).find('input.osmfield-address').length)
+				$(this).append('<input name="osmfield" class="osmfield-address" type="text" />');
+
+			if (!$(this).find('input.osmfield-lat').length)
+				$(this).append('<input name="'+nameAttribute+'-lat" class="osmfield-lat" type="hidden" />');
+
+			if (!$(this).find('input.osmfield-lng').length)
+				$(this).append('<input name="'+nameAttribute+'-lng" class="osmfield-lng" type="hidden" />');
+
+			$(this).append('<div class="osmfield-map"></div>');
+
+			var osmfieldElement = $(this);
 
 			// initialize Leaflet map, tile layer and marker
 			var map = L.map(osmfieldElement.find('.osmfield-map')[0]).setView([0,0], 15);
-			L.tileLayer('http://a.tiles.mapbox.com/v3/examples.map-9ijuk24y/{z}/{x}/{y}.png', {
+			L.tileLayer('https://b.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 				attribution:
 					'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,'+
 					' <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,'+
@@ -46,8 +56,8 @@
 					var language = osmfieldElement.data('language');
 					var url =
 						'https://nominatim.openstreetmap.org/reverse?json_callback=?';
-					osmfieldElement.find('.osmfield-address').attr('data-osmfield-lat',position.lat);
-					osmfieldElement.find('.osmfield-address').attr('data-osmfield-lng',position.lng);
+					osmfieldElement.find('.osmfield-lat').val(position.lat);
+					osmfieldElement.find('.osmfield-lng').val(position.lng);
 					$.getJSON(url,{
 							format: 'json',
 							lat: position.lat,
@@ -69,7 +79,7 @@
 				$(this).data('oldvalue',$(this).val());
 
 				function search(nameInputElement) {
-					var language = nameInputElement.closest('.osmfield-wrapper').data('language');
+					var language = nameInputElement.closest('.osmfield').data('language');
 					var url =
 						'https://nominatim.openstreetmap.org/search?json_callback=?';
 					(function (osmfieldElement) {
@@ -86,23 +96,23 @@
 								var lng = data[0].lon;
 								var name = data[0].display_name;
 
-								osmfieldElement.find('.osmfield-address').attr('data-osmfield-lat',lat);
-								osmfieldElement.find('.osmfield-address').attr('data-osmfield-lng',lng);
+								osmfieldElement.find('.osmfield-lat').val(lat);
+								osmfieldElement.find('.osmfield-lng').val(lng);
 
 								var newLatLng = new L.LatLng(lat, lng);
 								marker.setLatLng(newLatLng);
 								map.panTo(newLatLng);
 							} else {
 								osmfieldElement.find('.osmfield-map').slideUp();
-								osmfieldElement.find('.osmfield-address').removeAttr('data-osmfield-lat');
-								osmfieldElement.find('.osmfield-address').removeAttr('data-osmfield-lng');
+								osmfieldElement.find('.osmfield-lat').val('');
+								osmfieldElement.find('.osmfield-lng').val('');
 							}
 
 							// Show map when INPUT has focus and coordinates are known
 							if (
 								osmfieldElement.find('.osmfield-address').is(":focus") &&
-								osmfieldElement.find('.osmfield-address').attr('data-osmfield-lat') &&
-								osmfieldElement.find('.osmfield-address').attr('data-osmfield-lng')
+								osmfieldElement.find('.osmfield-lat').val() &&
+								osmfieldElement.find('.osmfield-lng').val()
 							 ) {
 								osmfieldElement.find('.osmfield-map').slideDown();
 							} else {
@@ -125,11 +135,11 @@
 			osmfieldElement.find('.osmfield-map').hide();
 			// Use start values if given
 			if (
-				osmfieldElement.find('.osmfield-address').attr('data-osmfield-lat') &&
-				osmfieldElement.find('.osmfield-address').attr('data-osmfield-lng')) {
+				osmfieldElement.find('.osmfield-lat').val() &&
+				osmfieldElement.find('.osmfield-lng').val()) {
 				var newLatLng = new L.LatLng(
-					osmfieldElement.find('.osmfield-address').attr('data-osmfield-lat'),
-					osmfieldElement.find('.osmfield-address').attr('data-osmfield-lng')
+					osmfieldElement.find('.osmfield-lat').val(),
+					osmfieldElement.find('.osmfield-lng').val()
 				);
 				marker.setLatLng(newLatLng);
 				map.panTo(newLatLng);
@@ -141,7 +151,7 @@
 
 			// Hide map when clicking outside
 			$(document).click(function(event) {
-				var thisosmfield = $(event.target).closest('.osmfield-wrapper');
+				var thisosmfield = $(event.target).closest('.osmfield');
 				if(thisosmfield.length) {
 					// hide all maps except of this
 					$('.osmfield-map').not(thisosmfield.find('.osmfield-map')).slideUp();
@@ -156,8 +166,8 @@
 			(function (osmfieldElement) {
 				osmfieldElement.find('.osmfield-address').focus(function() {
 					if (
-						osmfieldElement.find('.osmfield-address').attr('data-osmfield-lat') &&
-						osmfieldElement.find('.osmfield-address').attr('data-osmfield-lng')
+						osmfieldElement.find('.osmfield-lat').val() &&
+						osmfieldElement.find('.osmfield-lat').val()
 					) {
 						osmfieldElement.find('.osmfield-map').slideDown();
 					}
