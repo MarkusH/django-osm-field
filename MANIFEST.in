@@ -2,3 +2,5 @@ include AUTHORS.rst
 include HISTORY.rst
 include LICENSE
 include README.rst
+recursive-include osm_field/static/css *.*
+recursive-include osm_field/static/js *.*
