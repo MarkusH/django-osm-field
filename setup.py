@@ -24,7 +24,7 @@ setup(
     long_description=readme + '\n\n' + history,
     author='Sinnwerkstatt Medienagentur GmbH',
     author_email='web@sinnwerkstatt.com',
-    url='http://git.sinnwerkstatt.com/sinnwerkstatt/osm-field',
+    url='https://github.com/sinnwerkstatt/django-osm-field',
     packages=[
         'osm_field',
     ],
