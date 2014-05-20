@@ -1,9 +1,9 @@
 <!doctype html>
-<html>
+<html lang="en-US">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>django-osm-field by sinnwerkstatt</title>
+    <title>osm-field jQuery Plugin by sinnwerkstatt</title>
 
     <link rel="stylesheet" href="stylesheets/vendor/styles.css">
     <link rel="stylesheet" href="stylesheets/vendor/pygment_trac.css">
@@ -11,54 +11,221 @@
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
+	<link rel="stylesheet" href="stylesheets/vendor/leaflet.css">
+	<link rel="stylesheet" href="stylesheets/osm_field.css">
+	<script src="javascripts/vendor/jquery-2.1.0.min.js"></script>
+	<script src="javascripts/vendor/leaflet.js"></script>
+	<script src="javascripts/osm_field.js"></script>
+
+	<script type="application/javascript">
+		$(function() {
+			$('input.osm-demo').osmfield();
+		});
+	</script>
+
   </head>
   <body>
     <div class="wrapper">
       <header>
-        <h1>django-osm-field</h1>
+        <h1>osm-field jQuery Plugin</h1>
         <p></p>
 
         <p class="view"><a href="https://github.com/sinnwerkstatt/django-osm-field">View the Project on GitHub <small>sinnwerkstatt/django-osm-field</small></a></p>
 
 
         <ul>
-          <li><a href="https://github.com/sinnwerkstatt/django-osm-field/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/sinnwerkstatt/django-osm-field/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/sinnwerkstatt/django-osm-field/zipball/gh-pages">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/sinnwerkstatt/django-osm-field/tarball/gh-pages">Download <strong>TAR Ball</strong></a></li>
           <li><a href="https://github.com/sinnwerkstatt/django-osm-field">View On <strong>GitHub</strong></a></li>
         </ul>
+
+
       </header>
       <section>
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<h3>The jQuery plugin</h3>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+<p>This page describes the jQuery part of the Django osm field plugin. You can use this stand alone in your own projects. The whole Django project is described <a href="https://github.com/sinnwerkstatt/django-osm-field">on github</a> and <a href="https://pypi.python.org/pypi/django-osm-field">on python.org</a>.
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<p>The jQuery osmfield plugin is a geolocation picker that turns any INPUT element into a position locator. Type in the address. If the <a href="http://wiki.openstreetmap.org/wiki/Nominatim">OpenStreetMap Nominatim API</a> finds matching coordinates, a map will be shown. You can correct the location here now or type another address. Finally, the Address and coordinates will be saved in the original INPUT element. The dependencies are <a href="http://leafletjs.com/">Leaflet</a> and <a href="http://jquery.com/">jQuery</a>.</p>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<h3>Simple osmfield</h3>
+<p>Let's start with jQuery, Leaflet, the Plugin and some lines CSS…</p>
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;leaflet.css&quot;&gt;
+&lt;script src=&quot;jquery-2.1.0.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;leaflet.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;osmfield.js&quot;&gt;&lt;/script&gt;
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+&lt;style type=&quot;text/css&quot;&gt;
+div.osmfield-wrapper {
+  position:relative;
+}
 
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+div.osmfield-map {
+  width: 350px;
+  height: 250px;
+  border: 1px solid black;
+  position: absolute;
+  left: 0;
+  top: 30px;
+  z-index: 1000;
+}
+&lt;/style&gt;</code></pre>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p>…add the INPUT elements…</p>
 
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+<pre><code>&lt;input class=&quot;osm-demo&quot; id=&quot;example1&quot; /&gt;
+&lt;input type=&quot;hidden&quot; id=&quot;example1-lat&quot; /&gt;
+&lt;input type=&quot;hidden&quot; id=&quot;example1-lng&quot; /&gt;</code></pre>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<p>…and now initalize everything.</p>
+
+<pre><code>&lt;script type=&quot;application/javascript&quot;&gt;
+$(function() {
+  $(&#39;.osm-demo&#39;).osmfield();
+});
+&lt;/script&gt;</code></pre>
+
+<p>Try it! Type Berlin or something.</p>
+
+<p>
+	<input class="osm-demo" id="example1" />
+	<input type="hidden" id="example1-lat" />
+	<input type="hidden" id="example1-lng" />
+</p>
+
+<p>The address' INPUT element must have an ID. This with appended “-lat” and “-lng” are the IDs of (usually hidden) latitude and longitude INPUTs. The map container will be prepended to the address INPUT. If there already is a DIV with ID “example1-lat”, it will be used. This way you can place the map whereever you like.</p>
+
+<h3>osmfield with address</h3>
+<p>Set a default address.</p>
+<pre><code>&lt;input class=&quot;osm-demo&quot; id=&quot;example2&quot; value=&quot;Thinkfarm Berlin&quot; /&gt;
+&lt;input type=&quot;hidden&quot; id=&quot;example2-lat&quot; /&gt;
+&lt;input type=&quot;hidden&quot; id=&quot;example2-lng&quot; /&gt;</code></pre>
+<p>
+	<input class="osm-demo" id="example2" value="Thinkfarm Berlin" />
+	<input type="hidden" id="example2-lat" />
+	<input type="hidden" id="example2-lng" />
+</p>
+
+<h3>osmfield with address and geo coordinates</h3>
+<p>In this example, the geo coordinates are already given on initialization. They do not have to match the address.</p>
+<pre><code>&lt;input class=&quot;osm-demo&quot; id=&quot;example3&quot; value=&quot;Thinkfarm Berlin&quot; /&gt;
+&lt;input id=&quot;example3-lat&quot; value=&quot;41.6147605&quot; type=&quot;hidden&quot; /&gt;
+&lt;input id=&quot;example3-lng&quot; value=&quot;0.6267842&quot; type=&quot;hidden&quot; /&gt;</code></pre>
+
+<p>
+	<input class="osm-demo" id="example3" value="Thinkfarm Berlin" />
+	<input id="example3-lat" value="41.6147605" type="hidden" />
+	<input id="example3-lng" value="0.6267842" type="hidden" />
+</p>
+
+
+<h3>osmfield with just geo coordinates</h3>
+<pre><code>&lt;input class=&quot;osm-demo&quot; id=&quot;example4&quot; /&gt;
+&lt;input id=&quot;example4-lat&quot; value=&quot;41.6147605&quot; type=&quot;hidden&quot; /&gt;
+&lt;input id=&quot;example4-lng&quot; value=&quot;0.6267842&quot; type=&quot;hidden&quot; /&gt;</code></pre>
+<p>Works but does not make sense.</p>
+
+<p>
+	<input class="osm-demo" id="example4" />
+	<input id="example4-lat" value="41.6147605" type="hidden" />
+	<input id="example4-lng" value="0.6267842" type="hidden" />
+</p>
+
+<h3>Internationalization</h3>
+<pre><code>&lt;input class=&quot;osm-demo&quot; id=&quot;example5&quot;
+  value=&quot;München&quot;
+  lang=&quot;de&quot; /&gt;
+&lt;input id=&quot;example5-lat&quot; type=&quot;hidden&quot; /&gt;
+&lt;input id=&quot;example5-lng&quot; type=&quot;hidden&quot; /&gt;</code></pre>
+<p><em>Munich</em> or <em>München</em>? Usually you have a document wide setting like <em>&lt;html lang=&quot;en-US&quot;&gt;</em>. osmfield uses the <em>lang</em> attribute that is set nearest to the selector.</p>
+
+<p>
+	<input class="osm-demo" id="example5" value="München" lang="de" />
+	<input id="example5-lat" type="hidden" />
+	<input id="example5-lng" type="hidden" />
+</p>
+
+<h3>Use the data</h3>
+<pre><code>&lt;script type=&quot;application/javascript&quot;&gt;
+$(function() {
+
+  $(&#39;button#getvalues&#39;).click(function() {
+    $(&#39;pre#values&#39;).text(
+      &#39;address: &#39;+$(&#39;input[name=yourhome]&#39;).val()+&#39;\n&#39;+
+      &#39;latitude: &#39;+$(&#39;input[name=yourhome-lat]&#39;).val()+&#39;\n&#39;+
+      &#39;longitude: &#39;+$(&#39;input[name=yourhome-lng]&#39;).val()
+    );
+  });
+
+});
+&lt;/script&gt;
+
+&lt;form action=&quot;.&quot; method=&quot;get&quot;&gt;
+  &lt;input class=&quot;osm-demo&quot; id=&quot;example6&quot; value=&quot;European Quarter, Brussels&quot; /&gt;
+  &lt;input id=&quot;example6-lat&quot; type=&quot;hidden&quot; /&gt;
+  &lt;input id=&quot;example6-lng&quot; type=&quot;hidden&quot; /&gt;
+
+  &lt;input type=&quot;submit&quot; /&gt;
+&lt;/form&gt;
+
+&lt;button id=&quot;getvalues&quot; /&gt;Get me the values!&lt;/button&gt;
+
+&lt;pre id=&quot;values&quot;&gt;&lt;/pre&gt;</code></pre>
+
+<p>You can read the address and geo coordinates whenever you want. If an <em>INPUT.osmfield-address</em> is set as shown in most of the examples above, its <em>name</em> attribute will be used for lat and lon INPUT elements with appended “-lat“. If there is no <em>INPUT.osmfield-address</em> or it does not have any <em>name</em> attribute, “osmfield-lat“ and “osmfield-lng“ will be used. All this even works without user interaction simply after initailzation. Click the button.</p>
+
+<form action="." method="get"><p>
+	<input class="osm-demo" id="example6" value="European Quarter, Brussels" />
+	<input id="example6-lat" type="hidden" />
+	<input id="example6-lng" type="hidden" />
+</p>
+<p>Click and look at the URL: <input type="submit" /></form>
+
+
+<button id="getvalues" />Get me the values!</button>
+<pre id="values"></pre>
+
+
+
+<h3>No Popup</h3>
+<pre><code>&lt;style type=&quot;text/css&quot;&gt;
+  div.osmfield-embedded-map { position: static; top: 0; left: 0; }
+&lt;/style&gt;
+
+&lt;input class=&quot;osm-demo&quot; id=&quot;example7&quot; value=&quot;Jeber-Bergfrieden&quot; /&gt;
+&lt;div class=&quot;osmfield-embedded-map&quot; id=&quot;example7-map&quot;&gt;&lt;/div&gt;
+&lt;input id=&quot;example7-lat&quot; type=&quot;hidden&quot; /&gt;
+&lt;input id=&quot;example7-lng&quot; type=&quot;hidden&quot; /&gt;</code></pre>
+<p>If you don't want your map to pop over the page, simply embed it like any other element. The CSS is up to you.</p>
+
+
+<script type="application/javascript">
+	$(function() {
+		$('button#getvalues').click(function() {
+			$('pre#values').text(
+				'address: '+$('#example6').val()+'\n'+
+				'latitude: '+$('#example6-lat').val()+'\n'+
+				'longitude: '+$('#example6-lng').val()
+			);
+		});
+	});
+</script>
+<style type="text/css">
+	div.osmfield-embedded-map { position: static; top: 0; left: 0; }
+</style>
+
+<input class="osm-demo" id="example7" value="Jeber-Bergfrieden" />
+<div class="osmfield-embedded-map" id="example7-map"></div>
+<input id="example7-lat" type="hidden" />
+<input id="example7-lng" type="hidden" />
+
+<p>This text is always visible as the map scrolls everything down.</p>
+
+
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/sinnwerkstatt">sinnwerkstatt</a></p>
