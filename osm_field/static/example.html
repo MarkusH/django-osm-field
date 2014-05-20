@@ -30,8 +30,8 @@
 			$('button#getvalues').click(function() {
 				$('pre#values').text(
 					'address: '+$('#example6').val()+'\n'+
-					'latitude: '+$('#example6-lat').val()+'\n'+
-					'longitude: '+$('#example6-lng').val()
+					'latitude: '+$('#example6_lat').val()+'\n'+
+					'longitude: '+$('#example6_lon').val()
 				);
 			});
 
@@ -73,8 +73,8 @@ span.osmfield {
 <p>…add the INPUT elements…</p>
 
 <pre>&lt;input class=&quot;osm-demo&quot; id=&quot;example1&quot; /&gt;
-&lt;input type=&quot;hidden&quot; id=&quot;example1-lat&quot; /&gt;
-&lt;input type=&quot;hidden&quot; id=&quot;example1-lng&quot; /&gt;</pre>
+&lt;input type=&quot;hidden&quot; id=&quot;example1_lat&quot; /&gt;
+&lt;input type=&quot;hidden&quot; id=&quot;example1_lon&quot; /&gt;</pre>
 
 <p>…and now initalize everything.</p>
 
@@ -88,59 +88,59 @@ $(function() {
 
 <p>
 	<input class="osm-demo" id="example1" />
-	<input type="hidden" id="example1-lat" />
-	<input type="hidden" id="example1-lng" />
+	<input type="hidden" id="example1_lat" />
+	<input type="hidden" id="example1_lon" />
 </p>
 
 
 <h2>osmfield with address</h2>
 <p>Set a default address.</p>
 <pre>&lt;input class=&quot;osm-demo&quot; id=&quot;example2&quot; value=&quot;Thinkfarm Berlin&quot; /&gt;
-&lt;input type=&quot;hidden&quot; id=&quot;example2-lat&quot; /&gt;
-&lt;input type=&quot;hidden&quot; id=&quot;example2-lng&quot; /&gt;</pre>
+&lt;input type=&quot;hidden&quot; id=&quot;example2_lat&quot; /&gt;
+&lt;input type=&quot;hidden&quot; id=&quot;example2_lon&quot; /&gt;</pre>
 <p>
 	<input class="osm-demo" id="example2" value="Thinkfarm Berlin" />
-	<input type="hidden" id="example2-lat" />
-	<input type="hidden" id="example2-lng" />
+	<input type="hidden" id="example2_lat" />
+	<input type="hidden" id="example2_lon" />
 </p>
 
 <h2>osmfield with address and geo coordinates</h2>
 <p>In this example, the geo coordinates are already given on initialization. They do not have to match the address.</p>
 <pre>&lt;input class=&quot;osm-demo&quot; id=&quot;example3&quot; value=&quot;Thinkfarm Berlin&quot; /&gt;
-&lt;input id=&quot;example3-lat&quot; value=&quot;41.6147605&quot; type=&quot;hidden&quot; /&gt;
-&lt;input id=&quot;example3-lng&quot; value=&quot;0.6267842&quot; type=&quot;hidden&quot; /&gt;</pre>
+&lt;input id=&quot;example3_lat&quot; value=&quot;41.6147605&quot; type=&quot;hidden&quot; /&gt;
+&lt;input id=&quot;example3_lon&quot; value=&quot;0.6267842&quot; type=&quot;hidden&quot; /&gt;</pre>
 
 <p>
 	<input class="osm-demo" id="example3" value="Thinkfarm Berlin" />
-	<input id="example3-lat" value="41.6147605" type="hidden" />
-	<input id="example3-lng" value="0.6267842" type="hidden" />
+	<input id="example3_lat" value="41.6147605" type="hidden" />
+	<input id="example3_lon" value="0.6267842" type="hidden" />
 </p>
 
 
 <h2>osmfield with just geo coordinates</h2>
 <pre>&lt;input class=&quot;osm-demo&quot; id=&quot;example4&quot; /&gt;
-&lt;input id=&quot;example4-lat&quot; value=&quot;41.6147605&quot; type=&quot;hidden&quot; /&gt;
-&lt;input id=&quot;example4-lng&quot; value=&quot;0.6267842&quot; type=&quot;hidden&quot; /&gt;</pre>
+&lt;input id=&quot;example4_lat&quot; value=&quot;41.6147605&quot; type=&quot;hidden&quot; /&gt;
+&lt;input id=&quot;example4_lon&quot; value=&quot;0.6267842&quot; type=&quot;hidden&quot; /&gt;</pre>
 <p>Works but does not make sense.</p>
 
 <p>
 	<input class="osm-demo" id="example4" />
-	<input id="example4-lat" value="41.6147605" type="hidden" />
-	<input id="example4-lng" value="0.6267842" type="hidden" />
+	<input id="example4_lat" value="41.6147605" type="hidden" />
+	<input id="example4_lon" value="0.6267842" type="hidden" />
 </p>
 
 <h2>German osmfield</h2>
 <pre>&lt;input class=&quot;osm-demo&quot; id=&quot;example5&quot;
   value=&quot;Vereinigtes K&#246;nigreich Gro&#223;britannien und Nordirland&quot;
   lang=&quot;de&quot; /&gt;
-&lt;input id=&quot;example5-lat&quot; type=&quot;hidden&quot; /&gt;
-&lt;input id=&quot;example5-lng&quot; type=&quot;hidden&quot; /&gt;</pre>
+&lt;input id=&quot;example5_lat&quot; type=&quot;hidden&quot; /&gt;
+&lt;input id=&quot;example5_lon&quot; type=&quot;hidden&quot; /&gt;</pre>
 <p><em>United Kingdom</em> or <em>Vereinigtes Königreich Großbritannien und Nordirland</em>? Usually you have a document wide setting like <em>&lt;html lang=&quot;en-US&quot;&gt;</em>. osmfield uses the language that is set nearest to it.</p>
 
 <p>
 	<input class="osm-demo" id="example5" value="Vereinigtes Königreich Großbritannien und Nordirland" lang="de" />
-	<input id="example5-lat" type="hidden" />
-	<input id="example5-lng" type="hidden" />
+	<input id="example5_lat" type="hidden" />
+	<input id="example5_lon" type="hidden" />
 </p>
 
 <h2>Use the data</h2>
@@ -150,8 +150,8 @@ $(function() {
   $(&#39;button#getvalues&#39;).click(function() {
     $(&#39;pre#values&#39;).text(
       &#39;address: &#39;+$(&#39;input[name=yourhome]&#39;).val()+&#39;\n&#39;+
-      &#39;latitude: &#39;+$(&#39;input[name=yourhome-lat]&#39;).val()+&#39;\n&#39;+
-      &#39;longitude: &#39;+$(&#39;input[name=yourhome-lng]&#39;).val()
+      &#39;latitude: &#39;+$(&#39;input[name=yourhome_lat]&#39;).val()+&#39;\n&#39;+
+      &#39;longitude: &#39;+$(&#39;input[name=yourhome_lon]&#39;).val()
     );
   });
 
@@ -160,8 +160,8 @@ $(function() {
 
 &lt;form action=&quot;http://example.com/&quot; method=&quot;get&quot;&gt;
   &lt;input class=&quot;osm-demo&quot; id=&quot;example6&quot; value=&quot;European Quarter, Brussels&quot; /&gt;
-  &lt;input id=&quot;example6-lat&quot; type=&quot;hidden&quot; /&gt;
-  &lt;input id=&quot;example6-lng&quot; type=&quot;hidden&quot; /&gt;
+  &lt;input id=&quot;example6_lat&quot; type=&quot;hidden&quot; /&gt;
+  &lt;input id=&quot;example6_lon&quot; type=&quot;hidden&quot; /&gt;
 
   &lt;input type=&quot;submit&quot; /&gt;
 &lt;/form&gt;
@@ -170,12 +170,12 @@ $(function() {
 
 &lt;pre id=&quot;values&quot;&gt;&lt;/pre&gt;</pre>
 
-<p>You can read the address and geo coordinates whenever you want. If an <em>INPUT.osmfield-address</em> is set as shown in most of the examples above, its <em>name</em> attribute will be used for lat and lon INPUT elements with appended “-lat“. If there is no <em>INPUT.osmfield-address</em> or it does not have any <em>name</em> attribute, “osmfield-lat“ and “osmfield-lng“ will be used. All this even works without user interaction simply after initailzation. Click the button.</p>
+<p>You can read the address and geo coordinates whenever you want. If an <em>INPUT.osmfield-address</em> is set as shown in most of the examples above, its <em>name</em> attribute will be used for lat and lon INPUT elements with appended “_lat“. If there is no <em>INPUT.osmfield-address</em> or it does not have any <em>name</em> attribute, “osmfield_lat“ and “osmfield_lon“ will be used. All this even works without user interaction simply after initailzation. Click the button.</p>
 
 <form action="http://example.com/" method="get"><p>
 	<input class="osm-demo" id="example6" value="European Quarter, Brussels" />
-	<input id="example6-lat" type="hidden" />
-	<input id="example6-lng" type="hidden" />
+	<input id="example6_lat" type="hidden" />
+	<input id="example6_lon" type="hidden" />
 </p>
 <p>Click and look at the URL: <input type="submit" /></form>
 

@@ -12,8 +12,8 @@
 			// We don't use the wrapper, but it could be useful for CSS.
 			$(this).before('<div class="osmfield-wrapper"><div class="osmfield-map"></div></div>');
 
-			$(this).data('lat-element',$('#'+idAttribute+'-lat'));
-			$(this).data('lng-element',$('#'+idAttribute+'-lng'));
+			$(this).data('lat-element',$('#'+idAttribute+'_lat'));
+			$(this).data('lng-element',$('#'+idAttribute+'_lon'));
 			$(this).data('map-element',$(this).prev().find('.osmfield-map'));
 
 			var osmfieldElement = $(this);
