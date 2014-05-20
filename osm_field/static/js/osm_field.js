@@ -9,22 +9,25 @@
 			var idAttribute = $(this).attr('id');
 			$(this).addClass('osmfield-input');
 
-			// We don't use the wrapper, but it could be useful for CSS.
-			$(this).before('<div class="osmfield-wrapper"><div class="osmfield-map"></div></div>');
+			// Create map container when not existent.
+			// Wrapper is only for CSS.
+			if (!$('#'+idAttribute+'-map').length)
+				$(this).before('<div class="osmfield-wrapper"><div id="'+idAttribute+'-map"></div></div>');
 
-			$(this).data('lat-element',$('#'+idAttribute+'_lat'));
-			$(this).data('lng-element',$('#'+idAttribute+'_lon'));
-			$(this).data('map-element',$(this).prev().find('.osmfield-map'));
+			$(this).data('lat-element',$('#'+idAttribute+'-lat'));
+			$(this).data('lng-element',$('#'+idAttribute+'-lng'));
+			$(this).data('map-element',$('#'+idAttribute+'-map'));
+			$(this).data('map-element').addClass('osmfield-map');
 
 			var osmfieldElement = $(this);
 
 			// initialize Leaflet map, tile layer and marker
 			var map = L.map(osmfieldElement.data('map-element')[0]).setView([0,0], 15);
-			L.tileLayer('https://b.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			L.tileLayer('http://otile1.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpg', {
 				attribution:
 					'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,'+
 					' <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,'+
-					' Imagery © <a href="http://mapbox.com">Mapbox</a>',
+					' Imagery © <a href="http://www.mapquest.com/">Mapquest</a>',
 				maxZoom: 18
 			}).addTo(map);
 			var marker = L.marker([0,0],{draggable:true}).addTo(map);
@@ -146,13 +149,11 @@
 			// Hide map when clicking outside
 			$(document).click(function(event) {
 				// A child of INPUT or map was clicked
-				var thisosmfield = $(event.target).closest('.osmfield-input, .osmfield-wrapper');
+				var thisosmfield = $(event.target).closest('.osmfield-input, .osmfield-map');
 				if(thisosmfield.length) {
 					// hide all maps except of this
 					if (thisosmfield.hasClass('osmfield-input')) {
 						thisosmfield = thisosmfield.data('map-element');
-					} else {
-						thisosmfield = thisosmfield.find('.osmfield-map');
 					}
 					$('.osmfield-map').not(thisosmfield).slideUp();
 				} else {
