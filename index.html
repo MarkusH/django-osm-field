@@ -165,9 +165,9 @@ $(function() {
 &lt;/script&gt;
 
 &lt;form action=&quot;.&quot; method=&quot;get&quot;&gt;
-  &lt;input class=&quot;osm-demo&quot; id=&quot;example6&quot; value=&quot;European Quarter, Brussels&quot; /&gt;
-  &lt;input id=&quot;example6-lat&quot; type=&quot;hidden&quot; /&gt;
-  &lt;input id=&quot;example6-lng&quot; type=&quot;hidden&quot; /&gt;
+  &lt;input name=&quot;address&quot; class=&quot;osm-demo&quot; id=&quot;example6&quot; value=&quot;European Quarter, Brussels&quot; /&gt;
+  &lt;input name=&quot;latitude&quot; id=&quot;example6-lat&quot; type=&quot;hidden&quot; /&gt;
+  &lt;input name=&quot;longitude&quot; id=&quot;example6-lng&quot; type=&quot;hidden&quot; /&gt;
 
   &lt;input type=&quot;submit&quot; /&gt;
 &lt;/form&gt;
@@ -179,9 +179,9 @@ $(function() {
 <p>You can read the address and geo coordinates whenever you want. If an <em>INPUT.osmfield-address</em> is set as shown in most of the examples above, its <em>name</em> attribute will be used for lat and lon INPUT elements with appended “-lat“. If there is no <em>INPUT.osmfield-address</em> or it does not have any <em>name</em> attribute, “osmfield-lat“ and “osmfield-lng“ will be used. All this even works without user interaction simply after initailzation. Click the button.</p>
 
 <form action="." method="get"><p>
-	<input class="osm-demo" id="example6" value="European Quarter, Brussels" />
-	<input id="example6-lat" type="hidden" />
-	<input id="example6-lng" type="hidden" />
+	<input name="address" class="osm-demo" id="example6" value="European Quarter, Brussels" />
+	<input name="latitude" id="example6-lat" type="hidden" />
+	<input name="longitude" id="example6-lng" type="hidden" />
 </p>
 <p>Click and look at the URL: <input type="submit" /></form>
 
