@@ -2,6 +2,14 @@
 Installation
 ============
 
-At the command line::
+Install django-osm-field from PyPI::
 
-    $ pip install osm_field
+    $ pip install django-osm-field
+
+Add django-osm-field to your ``INSTALLED_APPS``::
+
+    INSTALLED_APPS = (
+        # ...
+        'osm_field',
+        # ...
+    )
