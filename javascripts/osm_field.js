@@ -14,8 +14,8 @@
 			if (!$('#'+idAttribute+'-map').length)
 				$(this).before('<div class="osmfield-wrapper"><div id="'+idAttribute+'-map"></div></div>');
 
-			$(this).data('lat-element',$('#'+idAttribute+'-lat'));
-			$(this).data('lng-element',$('#'+idAttribute+'-lng'));
+			$(this).data('lat-element',$('#'+idAttribute+'_lat'));
+			$(this).data('lng-element',$('#'+idAttribute+'_lon'));
 			$(this).data('map-element',$('#'+idAttribute+'-map'));
 			$(this).data('map-element').addClass('osmfield-map');
 
