@@ -7,7 +7,7 @@ from django.utils.html import format_html
 
 def _get_js():
     from django.conf import settings
-    base = ['js/vendor/jquery-2.1.0.min.js', 'js/vendor/leaflet.js']
+    base = ['js/vendor/leaflet.js']
     if settings.configured and settings.DEBUG:
         base.extend(['js/osm_field.js'])
     else:

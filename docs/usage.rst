@@ -63,9 +63,22 @@ Template Layer
 
 .. code-block:: django
 
-    {{ form.media }}
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Save" />
-    </form>
+    {% load static from staticfiles %}<!DOCTYPE HTML>
+    <html>
+      <head>
+        <title></title>
+        <link rel="stylesheet" href="{% static "css/example.css" %}">
+        <!-- Either serve jQuery yourself -->
+        <link rel="stylesheet" href="{% static "js/vendor/jquery-2.1.0.min.js" %}">
+        <!-- or from a CDN -->
+        <script type="text/javascript" src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+      </head>
+      <body>
+        {{ form.media }}
+        <form action="" method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <input type="submit" value="Save" />
+        </form>
+      </body>
+    </html> 
