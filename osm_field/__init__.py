@@ -2,4 +2,4 @@
 
 __author__ = 'Sinnwerkstatt Medienagentur GmbH'
 __email__ = 'web@sinnwerkstatt.com'
-__version__ = '0.1.3'
+__version__ = '0.1.4'
