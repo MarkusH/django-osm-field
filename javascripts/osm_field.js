@@ -1,6 +1,7 @@
-// TODO: README.md
-// TODO: License
-
+<!-- jQuery OSM field
+	2014 by Thomas netAction Schmidt for Sinnwerkstatt
+	https://www.sinnwerkstatt.com/
+	MIT License -->
 (function($) {
 	$.fn.osmfield = function() {
 
@@ -111,7 +112,9 @@
 								osmfieldElement.data('lat-element').val() &&
 								osmfieldElement.data('lng-element').val()
 							 ) {
-								osmfieldElement.data('map-element').slideDown();
+								osmfieldElement.data('map-element').slideDown(function() {
+									window.dispatchEvent(new Event('resize'));
+								});
 							} else {
 								osmfieldElement.data('map-element').slideUp();
 							}
@@ -170,7 +173,9 @@
 						osmfieldElement.data('lat-element').val() &&
 						osmfieldElement.data('lng-element').val()
 					) {
-						osmfieldElement.data('map-element').slideDown();
+						osmfieldElement.data('map-element').slideDown(function() {
+							window.dispatchEvent(new Event('resize'));
+						});
 					}
 				});
 			})(osmfieldElement);
