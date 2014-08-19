@@ -1,7 +1,8 @@
-<!-- jQuery OSM field
-	2014 by Thomas netAction Schmidt for Sinnwerkstatt
-	https://www.sinnwerkstatt.com/
-	MIT License -->
+// jQuery OSM field
+// 2014 by Thomas netAction Schmidt for Sinnwerkstatt
+// https://www.sinnwerkstatt.com/
+// MIT License
+
 (function($) {
 	$.fn.osmfield = function() {
 
