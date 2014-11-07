@@ -16,8 +16,8 @@ install:
   - pip install https://github.com/django/django/archive/${DJANGO}.tar.gz
   - pip install -e .
   - pip install coveralls
-  - test "x${DJANGO}" -eq "xstable/1.4.x" && pip install -U django-discover-runner
-  - test "x${DJANGO}" -eq "xstable/1.5.x" && pip install -U django-discover-runner
+  - test "x${DJANGO}" = "xstable/1.4.x" && pip install -U django-discover-runner
+  - test "x${DJANGO}" = "xstable/1.5.x" && pip install -U django-discover-runner
 
 script:
   - flake8 osm_field --ignore=E128,E501
