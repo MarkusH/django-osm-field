@@ -1,15 +1,42 @@
-# Config file for automatic testing at travis-ci.org
-
 language: python
 
 python:
-  - "3.3"
   - "2.7"
-  - "2.6"
-  - "pypy"
+  - "3.3"
+  - "3.4"
 
-# command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
-install: pip install -r requirements.txt
+env:
+  - DJANGO=stable/1.4.x
+  - DJANGO=stable/1.5.x
+  - DJANGO=stable/1.6.x
+  - DJANGO=stable/1.7.x
+  - DJANGO=master
 
-# command to run tests, e.g. python setup.py test
-script: python setup.py test
+install:
+  - pip install https://github.com/django/django/archive/${DJANGO}.tar.gz
+  - pip install -e .
+  - pip install coveralls
+  - test "x${DJANGO}" -eq "xstable/1.4.x" && pip install -U django-discover-runner
+  - test "x${DJANGO}" -eq "xstable/1.5.x" && pip install -U django-discover-runner
+
+script:
+  - flake8 osm_field --ignore=E128,E501
+  - coverage run `which django-admin.py` test --pythonpath=./ --settings=tests.settings tests
+  - coverage xml
+  - coverage report -m
+
+matrix:
+  exclude:
+    - python: "3.3"
+      env: DJANGO=stable/1.4.x
+    - python: "3.4"
+      env: DJANGO=stable/1.4.x
+
+    - python: "3.4"
+      env: DJANGO=stable/1.5.x
+
+    - python: "3.4"
+      env: DJANGO=stable/1.6.x
+
+after_success:
+    coveralls
