@@ -1,5 +1,6 @@
 div.osmfield-wrapper {
-	position:relative;
+	position: relative;
+	display: inline;
 }
 
 div.osmfield-map {
