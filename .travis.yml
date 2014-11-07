@@ -15,7 +15,7 @@ env:
 install:
   - pip install https://github.com/django/django/archive/${DJANGO}.tar.gz
   - pip install -e .
-  - pip install coveralls django-discover-runner
+  - pip install coveralls django-discover-runner flake8
 
 script:
   - flake8 osm_field --ignore=E128,E501
