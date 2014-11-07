@@ -86,6 +86,14 @@ class OSMField(six.with_metaclass(models.SubfieldBase, TextField)):
                 )
             setattr(cls, info_name, _func)
 
+    def deconstruct(self):
+        name, path, args, kwargs = super(OSMField, self).deconstruct()
+        if self.geo_blank:
+            kwargs['geo_blank'] = self.geo_blank
+        if self.geo_null:
+            kwargs['geo_null'] = self.geo_null
+        return name, path, args, kwargs
+
     def formfield(self, **kwargs):
         kwargs.update({
             'widget': OSMWidget,
