@@ -22,9 +22,9 @@ class Location(object):
 
     def __str__(self):
         out = []
-        if not self.text is None:
+        if self.text is not None:
             out.append(self.text)
-        if not (self.lat is None or self.lon is None):
+        if self.lat is not None and self.lon is not None:
             out.append('(%f, %f)' % (self.lat, self.lon))
         return ' '.join(out) or ''
 
@@ -66,12 +66,12 @@ class OSMField(six.with_metaclass(models.SubfieldBase, TextField)):
     def contribute_to_class(self, cls, name):
         super(OSMField, self).contribute_to_class(cls, name)
         lat_name = name + "_lat"
-        if not lat_name in cls._meta.fields:
+        if lat_name not in cls._meta.fields:
             lat = LatitudeField(_('Latitude'), blank=self.geo_blank,
                 null=self.geo_null, validators=[validate_latitude])
             lat.contribute_to_class(cls, lat_name)
         lon_name = name + "_lon"
-        if not lon_name in cls._meta.fields:
+        if lon_name not in cls._meta.fields:
             lon = LongitudeField(_('Longitude'), blank=self.geo_blank,
                 null=self.geo_null, validators=[validate_longitude])
             lon.contribute_to_class(cls, lon_name)
