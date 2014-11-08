@@ -20,6 +20,14 @@ osm_field.forms module
     :undoc-members:
     :show-inheritance:
 
+osm_field.validators module
+----------------------
+
+.. automodule:: osm_field.validators
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------
