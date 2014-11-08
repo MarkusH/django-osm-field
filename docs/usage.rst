@@ -15,14 +15,25 @@ the model to store the latitude and longitude:
     from django.core.urlresolvers import reverse
     from django.db import models
 
-    from osm_field.fields import OSMField
+    from osm_field.fields import LatitudeField, LongitudeField, OSMField
 
 
     class MyModel(models.Model):
         location = OSMField()
+        location_lat = LatitudeField()
+        location_lon = LongitudeField()
 
-Apart from the field ``location`` there will also be a field ``location_lat``
-and a field ``location_lon``.
+Apart from the field ``location`` you will also need to add a field
+``location_lat`` and a field ``location_lon``. If you want the latitude and
+longitude fields to have different names, you can specify them explicitly on
+the ``OSMField``:
+
+.. code-block:: python
+
+    class MyModel(models.Model):
+        location = OSMField(lat_field='latitude', lon_field='longitude')
+        latitude = LatitudeField()
+        longitude = LongitudeField()
 
 
 Form Layer
@@ -36,7 +47,7 @@ Form Layer
 
 
     class MyModelForm(forms.ModelForm):
-        
+
         class Meta:
             fields = ['location', 'location_lat', 'location_lon']
             model = MyModel

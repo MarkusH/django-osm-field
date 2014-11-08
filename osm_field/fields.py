@@ -3,10 +3,10 @@ from __future__ import unicode_literals
 
 import six
 
+from django.core import checks
 from django.db import models
-from django.db.models.fields import TextField, FloatField
+from django.db.models.fields import TextField, FloatField, FieldDoesNotExist
 from django.utils.encoding import force_text, python_2_unicode_compatible
-from django.utils.translation import ugettext_lazy as _
 
 from .forms import OSMWidget
 from .validators import validate_latitude, validate_longitude
@@ -38,6 +38,12 @@ class Location(object):
 
 class LatitudeField(six.with_metaclass(models.SubfieldBase, FloatField)):
 
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('validators', [])
+        if validate_latitude not in kwargs['validators']:
+            kwargs['validators'].append(validate_latitude)
+        super(LatitudeField, self).__init__(*args, **kwargs)
+
     def formfield(self, **kwargs):
         kwargs.update({
             'max_value': 90,
@@ -47,6 +53,12 @@ class LatitudeField(six.with_metaclass(models.SubfieldBase, FloatField)):
 
 
 class LongitudeField(six.with_metaclass(models.SubfieldBase, FloatField)):
+
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('validators', [])
+        if validate_longitude not in kwargs['validators']:
+            kwargs['validators'].append(validate_longitude)
+        super(LongitudeField, self).__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
         kwargs.update({
@@ -59,39 +71,71 @@ class LongitudeField(six.with_metaclass(models.SubfieldBase, FloatField)):
 class OSMField(six.with_metaclass(models.SubfieldBase, TextField)):
 
     def __init__(self, *args, **kwargs):
-        self.geo_blank = kwargs.pop('geo_blank', False)
-        self.geo_null = kwargs.pop('geo_null', False)
+        self._lat_field_name = kwargs.pop('lat_field', None)
+        self._lon_field_name = kwargs.pop('lon_field', None)
         super(OSMField, self).__init__(*args, **kwargs)
 
     def contribute_to_class(self, cls, name):
-        super(OSMField, self).contribute_to_class(cls, name)
-        lat_name = name + "_lat"
-        if lat_name not in cls._meta.fields:
-            lat = LatitudeField(_('Latitude'), blank=self.geo_blank,
-                null=self.geo_null, validators=[validate_latitude])
-            lat.contribute_to_class(cls, lat_name)
-        lon_name = name + "_lon"
-        if lon_name not in cls._meta.fields:
-            lon = LongitudeField(_('Longitude'), blank=self.geo_blank,
-                null=self.geo_null, validators=[validate_longitude])
-            lon.contribute_to_class(cls, lon_name)
-
         info_name = 'get_%s_info' % name
         if not hasattr(cls, info_name):
-            def _func(self):
+            def _func(obj):
                 return Location(
-                    getattr(self, lat_name),
-                    getattr(self, lon_name),
-                    getattr(self, name),
+                    getattr(obj, self.latitude_field_name),
+                    getattr(obj, self.longitude_field_name),
+                    getattr(obj, name),
                 )
             setattr(cls, info_name, _func)
 
+        super(OSMField, self).contribute_to_class(cls, name)
+
+    def check(self, **kwargs):
+        errors = super(OSMField, self).check(**kwargs)
+        errors.extend(self._check_latitude_field())
+        errors.extend(self._check_longitude_field())
+        return errors
+
+    def _check_latitude_field(self):
+        opts = self.model._meta
+        try:
+            opts.get_field(self.latitude_field_name)
+        except FieldDoesNotExist:
+            return [
+                checks.Error(
+                    "The OSMField '%s' references the non-existent latitude field '%s'." % (
+                        self.name, self.latitude_field_name,
+                    ),
+                    hint=None,
+                    obj=self,
+                    id='osm_field.E001',
+                )
+            ]
+        else:
+            return []
+
+    def _check_longitude_field(self):
+        opts = self.model._meta
+        try:
+            opts.get_field(self.longitude_field_name)
+        except FieldDoesNotExist:
+            return [
+                checks.Error(
+                    "The OSMField '%s' references the non-existent longitude field '%s'." % (
+                        self.name, self.longitude_field_name,
+                    ),
+                    hint=None,
+                    obj=self,
+                    id='osm_field.E002',
+                )
+            ]
+        else:
+            return []
+
     def deconstruct(self):
         name, path, args, kwargs = super(OSMField, self).deconstruct()
-        if self.geo_blank:
-            kwargs['geo_blank'] = self.geo_blank
-        if self.geo_null:
-            kwargs['geo_null'] = self.geo_null
+        kwargs.update({
+            'lat_field': self.latitude_field_name,
+            'lon_field': self.longitude_field_name,
+        })
         return name, path, args, kwargs
 
     def formfield(self, **kwargs):
@@ -99,6 +143,18 @@ class OSMField(six.with_metaclass(models.SubfieldBase, TextField)):
             'widget': OSMWidget,
         })
         return super(OSMField, self).formfield(**kwargs)
+
+    @property
+    def latitude_field_name(self):
+        if self._lat_field_name is None:
+            self._lat_field_name = self.name + '_lat'
+        return self._lat_field_name
+
+    @property
+    def longitude_field_name(self):
+        if self._lon_field_name is None:
+            self._lon_field_name = self.name + '_lon'
+        return self._lon_field_name
 
 
 try:
