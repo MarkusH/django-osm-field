@@ -7,7 +7,7 @@ from .models import ExampleModel
 class ExampleCreateView(CreateView):
     fields = [
         'location', 'location_lat', 'location_lon',
-        'another', 'another_lat', 'another_lon',
+        'another', 'some_lat_field', 'other_lon_field',
     ]
     model = ExampleModel
 
@@ -41,7 +41,7 @@ list_view = ExampleListView.as_view()
 class ExampleUpdateView(UpdateView):
     fields = [
         'location', 'location_lat', 'location_lon',
-        'another', 'another_lat', 'another_lon',
+        'another', 'some_lat_field', 'other_lon_field',
     ]
     model = ExampleModel
 
