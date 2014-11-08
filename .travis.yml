@@ -19,7 +19,7 @@ install:
 
 script:
   - flake8 osm_field --ignore=E128,E501
-  - coverage run `which django-admin.py` test --pythonpath=./ --settings=tests.settings tests
+  - coverage run `which django-admin.py` test -v 2 --pythonpath=./ --settings=tests.settings tests
   - coverage xml
   - coverage report -m
 
