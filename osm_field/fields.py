@@ -3,7 +3,11 @@ from __future__ import unicode_literals
 
 import six
 
-from django.core import checks
+try:  # noqa
+    from django.core import checks
+except ImportError:  # noqa: Django<1.7
+    pass
+
 from django.db import models
 from django.db.models.fields import TextField, FloatField, FieldDoesNotExist
 from django.utils.encoding import force_text, python_2_unicode_compatible

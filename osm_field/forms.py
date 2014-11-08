@@ -1,8 +1,24 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import six
+
 from django.forms.widgets import TextInput
-from django.utils.html import format_html
+
+try:
+    from django.utils.html import format_html
+except ImportError:
+    from django.utils.html import conditional_escape, mark_safe
+
+    def format_html(format_string, *args, **kwargs):
+        """
+        Similar to str.format, but passes all arguments through conditional_escape,
+        and calls 'mark_safe' on the result. This function should be used instead
+        of str.format or % interpolation to build up small HTML fragments.
+        """
+        args_safe = map(conditional_escape, args)
+        kwargs_safe = dict((k, conditional_escape(v)) for (k, v) in six.iteritems(kwargs))
+        return mark_safe(format_string.format(*args_safe, **kwargs_safe))
 
 
 def _get_js():
