@@ -1,6 +1,7 @@
-// TODO: README.md
-// TODO: License
-
+/* jQuery OSM field
+	2014 by Thomas netAction Schmidt for Sinnwerkstatt
+	https://www.sinnwerkstatt.com/
+	MIT License */
 (function($) {
 	$.fn.osmfield = function() {
 
@@ -23,7 +24,7 @@
 
 			// initialize Leaflet map, tile layer and marker
 			var map = L.map(osmfieldElement.data('map-element')[0]).setView([0,0], 15);
-			L.tileLayer('http://otile1.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpg', {
+			L.tileLayer('https://otile1-s.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpg', {
 				attribution:
 					'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,'+
 					' <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,'+
@@ -111,7 +112,9 @@
 								osmfieldElement.data('lat-element').val() &&
 								osmfieldElement.data('lng-element').val()
 							 ) {
-								osmfieldElement.data('map-element').slideDown();
+								osmfieldElement.data('map-element').slideDown(function() {
+									window.dispatchEvent(new Event('resize'));
+								});
 							} else {
 								osmfieldElement.data('map-element').slideUp();
 							}
@@ -170,7 +173,9 @@
 						osmfieldElement.data('lat-element').val() &&
 						osmfieldElement.data('lng-element').val()
 					) {
-						osmfieldElement.data('map-element').slideDown();
+						osmfieldElement.data('map-element').slideDown(function() {
+							window.dispatchEvent(new Event('resize'));
+						});
 					}
 				});
 			})(osmfieldElement);
