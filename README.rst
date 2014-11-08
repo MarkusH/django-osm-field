@@ -11,9 +11,9 @@ Django OSM Field
 .. image:: https://travis-ci.org/MarkusH/django-osm-field.png
    :target: https://travis-ci.org/MarkusH/django-osm-field
 
-..
-   .. image:: https://coveralls.io/repos/MarkusH/django-osm-field/badge.png?branch=develop
-      :target: https://coveralls.io/r/MarkusH/django-osm-field
+.. image:: https://coveralls.io/repos/MarkusH/django-osm-field/badge.png?branch=develop
+   :target: https://coveralls.io/r/MarkusH/django-osm-field
+
 
 Django OpenStreetMap Field
 
