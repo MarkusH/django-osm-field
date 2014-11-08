@@ -20,7 +20,10 @@ setup(
     ],
     package_dir={'osm_field': 'osm_field'},
     include_package_data=True,
-    install_requires=['six'],
+    install_requires=[
+        'Django>=1.4',
+        'six',
+    ],
     license="MIT",
     zip_safe=False,
     keywords='OpenStreetMap, OSM, Django, Geo, Geoposition',
