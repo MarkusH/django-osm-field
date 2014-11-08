@@ -59,7 +59,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Django OSM Field'
-copyright = u'2014, Sinnwerkstatt Medienagentur GmbH'
+copyright = u'2014, Markus Holtermann, et al'
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout

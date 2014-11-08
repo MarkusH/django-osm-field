@@ -1,30 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from setuptools import setup
 
-import os
-import sys
-
-
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
-
-if sys.argv[-1] == 'publish':
-    os.system('python setup.py sdist upload')
-    sys.exit()
 
 readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
+
 
 setup(
     name='django-osm-field',
     version='0.1.4',
     description='Django OpenStreetMap Field',
     long_description=readme + '\n\n' + history,
-    author='Sinnwerkstatt Medienagentur GmbH',
-    author_email='web@sinnwerkstatt.com',
-    url='https://github.com/sinnwerkstatt/django-osm-field',
+    author='Markus Holtermann, et al',
+    author_email='info@markusholtermann.eu',
+    url='https://github.com/MarkusH/django-osm-field',
     packages=[
         'osm_field',
     ],
@@ -36,6 +26,7 @@ setup(
     keywords='OpenStreetMap, OSM, Django, Geo, Geoposition',
     classifiers=[
         'Development Status :: 4 - Beta',
+        'Framework :: Django',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
@@ -43,5 +34,6 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
     ],
 )

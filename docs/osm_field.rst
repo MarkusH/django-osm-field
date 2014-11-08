@@ -1,8 +1,11 @@
-osm_field package
-=================
+=====================
+``osm_field`` package
+=====================
+
 
 Submodules
-----------
+==========
+
 
 osm_field.fields module
 -----------------------
@@ -12,6 +15,7 @@ osm_field.fields module
     :undoc-members:
     :show-inheritance:
 
+
 osm_field.forms module
 ----------------------
 
@@ -20,8 +24,9 @@ osm_field.forms module
     :undoc-members:
     :show-inheritance:
 
+
 osm_field.validators module
-----------------------
+---------------------------
 
 .. automodule:: osm_field.validators
     :members:
