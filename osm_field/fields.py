@@ -139,8 +139,10 @@ class OSMField(six.with_metaclass(models.SubfieldBase, TextField)):
         return name, path, args, kwargs
 
     def formfield(self, **kwargs):
+        widget = OSMWidget(lat_field=self.latitude_field_name,
+            lon_field=self.longitude_field_name)
         kwargs.update({
-            'widget': OSMWidget,
+            'widget': widget,
         })
         return super(OSMField, self).formfield(**kwargs)
 

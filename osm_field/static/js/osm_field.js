@@ -8,6 +8,9 @@
 		return this.each(function() {
 			// Create HTML elements for osmfield
 			var idAttribute = $(this).attr('id');
+			var idLatElement = $(this).data('lat-field');
+ 			var idLonElement = $(this).data('lon-field');
+      
 			$(this).addClass('osmfield-input');
 
 			// Create map container when not existent.
@@ -15,9 +18,9 @@
 			if (!$('#'+idAttribute+'-map').length)
 				$(this).before('<div class="osmfield-wrapper"><div id="'+idAttribute+'-map"></div></div>');
 
-			$(this).data('lat-element',$('#'+idAttribute+'_lat'));
-			$(this).data('lng-element',$('#'+idAttribute+'_lon'));
-			$(this).data('map-element',$('#'+idAttribute+'-map'));
+			$(this).data('lat-element',$('#id_' + idLatElement));
+			$(this).data('lng-element',$('#id_' + idLonElement));
+			$(this).data('map-element',$('#' + idAttribute+'-map'));
 			$(this).data('map-element').addClass('osmfield-map');
 
 			var osmfieldElement = $(this);

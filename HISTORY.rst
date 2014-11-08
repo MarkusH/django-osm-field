@@ -12,6 +12,8 @@ History
 * Forced map refresh on show
 * Added tests
 * Changed license from BSD to MIT
+* Added support for non-default named form fields (those not ending with
+  ``_lat`` and ``_lon`` respectively).
 
 
 0.1.4 (2014-06-02)

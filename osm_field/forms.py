@@ -31,8 +31,12 @@ class OSMWidget(TextInput):
         css = {'screen': _get_css()}
         js = _get_js()
 
-    def __init__(self, attrs=None):
+    def __init__(self, lat_field, lon_field, attrs=None):
         attrs = {} if attrs is None else attrs.copy()
+        attrs.update({
+            'data-lat-field': lat_field,
+            'data-lon-field': lon_field,
+        })
         if 'class' in attrs:
             attrs['class'] += ' osmfield'
         else:
