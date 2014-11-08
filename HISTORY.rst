@@ -11,6 +11,7 @@ History
 * Updated styling (#1)
 * Forced map refresh on show
 * Added tests
+* Changed license from BSD to MIT
 
 
 0.1.4 (2014-06-02)

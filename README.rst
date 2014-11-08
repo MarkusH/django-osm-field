@@ -7,7 +7,7 @@ Django OSM Field
 
 Django OpenStreetMap Field
 
-* Free software: BSD license
+* Free software: MIT license
 * Documentation: http://django-osm-field.rtfd.org.
 
 Features
