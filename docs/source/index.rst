@@ -6,12 +6,11 @@ Contents:
 .. toctree::
    :maxdepth: 1
 
-   readme
    installation
    usage
-   osm_field
    authors
    history
+   ref/index
 
 
 Indices and tables

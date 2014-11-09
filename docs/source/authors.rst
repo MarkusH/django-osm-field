@@ -1,4 +1,4 @@
-.. include:: ../AUTHORS.rst
+.. include:: ../../AUTHORS.rst
 
 Project has been started by `Sinnwerkstatt Medienagentur GmbH`_ in April 2014.
 

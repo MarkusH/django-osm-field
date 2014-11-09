@@ -18,7 +18,7 @@ version = __version__
 release = __version__
 
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode']
-exclude_patterns = ['_build']
+exclude_patterns = ['build']
 
 master_doc = 'index'
 source_suffix = '.rst'
