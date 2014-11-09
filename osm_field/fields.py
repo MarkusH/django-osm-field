@@ -42,15 +42,27 @@ class Location(object):
         if self.text is not None:
             out.append(self.text)
         if self.lat is not None and self.lon is not None:
-            out.append('(%f, %f)' % (self.lat, self.lon))
+            out.append('(%.6f, %.6f)' % (self.lat, self.lon))
         return ' '.join(out)
 
     def __repr__(self):
-        return '<Location lat=%s lon=%s text=%s>' % (
-            force_text(self.lat),
-            force_text(self.lon),
-            force_text(self.text)
+        return '<Location lat=%.6f lon=%.6f text=%s>' % (
+            self.lat, self.lon, force_text(self.text)
         )
+
+    def __copy__(self):
+        return self.__class__(self.lat, self.lon, self.text)
+
+    def __eq__(self, other):
+        return (
+            isinstance(other, self.__class__) and
+            self.lat == other.lat and
+            self.lon == other.lon and
+            self.text == other.text
+        )
+
+    def __ne__(self, other):
+        return not (self == other)
 
 
 class LatitudeField(six.with_metaclass(models.SubfieldBase, FloatField)):
