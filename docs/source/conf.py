@@ -17,7 +17,7 @@ copyright = u'2014, Markus Holtermann, et al'
 version = __version__
 release = __version__
 
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode']
+extensions = ['sphinx.ext.autodoc', 'sphinx.ext.intersphinx']
 exclude_patterns = ['build']
 
 master_doc = 'index'
@@ -29,8 +29,6 @@ templates_path = ['_templates']
 intersphinx_mapping = {
     'django': ('https://docs.djangoproject.com/en/dev/',
                'https://docs.djangoproject.com/en/dev/_objects/'),
-    'python2': ('http://docs.python.org/2/', None),
-    'python3': ('http://docs.python.org/3/', None),
 }
 
 # -- Options for HTML output ---------------------------------------------------

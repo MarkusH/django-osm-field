@@ -77,6 +77,8 @@ View Layer
         model = MyModel
 
 
+.. _usage-template-layer:
+
 Template Layer
 ==============
 

@@ -42,6 +42,11 @@ def _get_css():
 
 
 class OSMWidget(TextInput):
+    """
+    Adds a OpenStreetMap Leaflet dropdown map to the front-end once the user
+    focuses the form field. See :ref:`the usage chapter <usage-template-layer>`
+    on how to integrate the CSS and JavaScript code.
+    """
 
     class Media:
         css = {'screen': _get_css()}

@@ -1,7 +1,12 @@
+=====
 Forms
 =====
 
-.. automodule:: osm_field.forms
+.. py:module:: osm_field.forms
+
+OSMWidget
+=========
+
+.. autoclass:: OSMWidget
     :members:
-    :undoc-members:
     :show-inheritance:

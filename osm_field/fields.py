@@ -18,6 +18,14 @@ from .validators import validate_latitude, validate_longitude
 
 @python_2_unicode_compatible
 class Location(object):
+    """
+    A wrapper class bundling the description of a location (``text``) and its
+    geo coordinates, latitude (``lat``) and longitude (``lon``).
+
+    :param float lat: The latitude
+    :param float lon: The longitude
+    :param str: The description
+    """
 
     def __init__(self, lat, lon, text):
         self.lat = lat
@@ -25,12 +33,17 @@ class Location(object):
         self.text = text
 
     def __str__(self):
+        """
+        Returns a string representation of this object in the form ``text (lat,
+        lon)`` where either ``text`` or ``(lat, lon)'`` or both can be empty. In
+        that case the return value is ``''``.
+        """
         out = []
         if self.text is not None:
             out.append(self.text)
         if self.lat is not None and self.lon is not None:
             out.append('(%f, %f)' % (self.lat, self.lon))
-        return ' '.join(out) or ''
+        return ' '.join(out)
 
     def __repr__(self):
         return '<Location lat=%s lon=%s text=%s>' % (
@@ -41,6 +54,14 @@ class Location(object):
 
 
 class LatitudeField(six.with_metaclass(models.SubfieldBase, FloatField)):
+    """
+    Bases: :class:`django.db.models.FloatField`
+
+    All :ref:`default field options <django:common-model-field-options>`.
+
+    The ``validators`` parameter will be appended with
+    :func:`~validate_latitude` if not already present.
+    """
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('validators', [])
@@ -49,6 +70,10 @@ class LatitudeField(six.with_metaclass(models.SubfieldBase, FloatField)):
         super(LatitudeField, self).__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
+        """
+        :returns: A :class:`~django.forms.FloatField` with ``max_value`` 90 and
+            ``min_value`` -90.
+        """
         kwargs.update({
             'max_value': 90,
             'min_value': -90,
@@ -57,6 +82,14 @@ class LatitudeField(six.with_metaclass(models.SubfieldBase, FloatField)):
 
 
 class LongitudeField(six.with_metaclass(models.SubfieldBase, FloatField)):
+    """
+    Bases: :class:`django.db.models.FloatField`
+
+    All :ref:`default field options <django:common-model-field-options>`.
+
+    The ``validators`` parameter will be appended with
+    :func:`~validate_longitude` if not already present.
+    """
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('validators', [])
@@ -65,6 +98,10 @@ class LongitudeField(six.with_metaclass(models.SubfieldBase, FloatField)):
         super(LongitudeField, self).__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
+        """
+        :returns: A :class:`~django.forms.FloatField` with ``max_value`` 180 and
+            ``min_value`` -180.
+        """
         kwargs.update({
             'max_value': 180,
             'min_value': -180,
@@ -73,6 +110,16 @@ class LongitudeField(six.with_metaclass(models.SubfieldBase, FloatField)):
 
 
 class OSMField(six.with_metaclass(models.SubfieldBase, TextField)):
+    """
+    Bases: :class:`django.db.models.TextField`
+
+    :param str lat_field: The name of the latitude field. ``None`` (and thus
+        standard behavior) by default.
+    :param str lon_field: The name of the longitude field. ``None`` (and thus
+        standard behavior) by default.
+
+    All :ref:`default field options <django:common-model-field-options>`.
+    """
 
     def __init__(self, *args, **kwargs):
         self._lat_field_name = kwargs.pop('lat_field', None)
@@ -143,6 +190,10 @@ class OSMField(six.with_metaclass(models.SubfieldBase, TextField)):
         return name, path, args, kwargs
 
     def formfield(self, **kwargs):
+        """
+        :returns: A :class:`~django.forms.CharField` with a
+            :class:`~osm_field.forms.OSMWidget`.
+        """
         widget = OSMWidget(lat_field=self.latitude_field_name,
             lon_field=self.longitude_field_name)
         kwargs.update({
@@ -152,12 +203,18 @@ class OSMField(six.with_metaclass(models.SubfieldBase, TextField)):
 
     @property
     def latitude_field_name(self):
+        """
+        The name of the related :class:`LatitudeField`.
+        """
         if self._lat_field_name is None:
             self._lat_field_name = self.name + '_lat'
         return self._lat_field_name
 
     @property
     def longitude_field_name(self):
+        """
+        The name of the related :class:`LongitudeField`.
+        """
         if self._lon_field_name is None:
             self._lon_field_name = self.name + '_lon'
         return self._lon_field_name
