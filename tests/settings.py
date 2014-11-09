@@ -3,6 +3,7 @@ import os.path
 
 import django
 
+DEBUG = False
 
 RUNTESTS_DIR = os.path.abspath(os.path.dirname(__file__))
 
