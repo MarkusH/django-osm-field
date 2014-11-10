@@ -9,7 +9,7 @@ history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 setup(
     name='django-osm-field',
-    version='0.1.4',
+    version='0.2.0',
     description='Django OpenStreetMap Field',
     long_description=readme + '\n\n' + history,
     author='Markus Holtermann, et al',

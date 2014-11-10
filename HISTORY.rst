@@ -4,8 +4,8 @@
 History
 =======
 
-0.2.0 (under development)
-=========================
+0.2.0 (2014-11-10)
+==================
 
 * Added support for Django 1.7 migrations (#2)
 * Updated styling (#1)
@@ -14,6 +14,7 @@ History
 * Changed license from BSD to MIT
 * Added support for non-default named form fields (those not ending with
   ``_lat`` and ``_lon`` respectively).
+* Added documentation
 
 
 0.1.4 (2014-06-02)
