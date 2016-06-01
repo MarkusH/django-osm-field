@@ -4,12 +4,11 @@ python:
   - "2.7"
   - "3.3"
   - "3.4"
+  - "3.5"
 
 env:
-  - DJANGO=stable/1.4.x
-  - DJANGO=stable/1.5.x
-  - DJANGO=stable/1.6.x
-  - DJANGO=stable/1.7.x
+  - DJANGO=stable/1.8.x
+  - DJANGO=stable/1.9.x
   - DJANGO=master
 
 install:
@@ -22,19 +21,6 @@ script:
   - coverage run `which django-admin.py` test -v 2 --pythonpath=./ --settings=tests.settings tests
   - coverage xml
   - coverage report -m
-
-matrix:
-  exclude:
-    - python: "3.3"
-      env: DJANGO=stable/1.4.x
-    - python: "3.4"
-      env: DJANGO=stable/1.4.x
-
-    - python: "3.4"
-      env: DJANGO=stable/1.5.x
-
-    - python: "3.4"
-      env: DJANGO=stable/1.6.x
 
 after_success:
     coveralls
