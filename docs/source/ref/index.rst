@@ -8,3 +8,4 @@ References
    fields
    forms
    validators
+   widgets

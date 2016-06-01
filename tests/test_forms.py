@@ -4,7 +4,8 @@ from django.test import SimpleTestCase
 from django.test.utils import override_settings
 
 from .forms import (
-    CustomNamingForm, DefaultNamingForm, MixedNamingForm, MultipleNamingForm,
+    ChildModelFormset, CustomNamingForm, DefaultNamingForm, MixedNamingForm,
+    MultipleNamingForm,
 )
 
 
@@ -73,6 +74,39 @@ class TestWidget(SimpleTestCase):
         self.assertIn(
             '<script type="application/javascript">'
             '$(function(){$("#id_custom_location").osmfield();});'
+            '</script>',
+            html
+        )
+
+    def test_widget_prefix_in_formset(self):
+        html = ChildModelFormset().as_p()
+        # Check for form 0
+        self.assertIn('id="id_children-0-location"', html)
+        self.assertIn('name="children-0-location"', html)
+        self.assertIn('data-lat-field="children-0-location_lat"', html)
+        self.assertIn('data-lon-field="children-0-location_lon"', html)
+        self.assertIn('id="id_children-0-location_lat"', html)
+        self.assertIn('id="id_children-0-location_lon"', html)
+        self.assertIn('name="children-0-location_lat"', html)
+        self.assertIn('name="children-0-location_lon"', html)
+        self.assertIn(
+            '<script type="application/javascript">'
+            '$(function(){$("#id_children-0-location").osmfield();});'
+            '</script>',
+            html
+        )
+        # Check for form 1
+        self.assertIn('id="id_children-1-location"', html)
+        self.assertIn('name="children-1-location"', html)
+        self.assertIn('data-lat-field="children-1-location_lat"', html)
+        self.assertIn('data-lon-field="children-1-location_lon"', html)
+        self.assertIn('id="id_children-1-location_lat"', html)
+        self.assertIn('id="id_children-1-location_lon"', html)
+        self.assertIn('name="children-1-location_lat"', html)
+        self.assertIn('name="children-1-location_lon"', html)
+        self.assertIn(
+            '<script type="application/javascript">'
+            '$(function(){$("#id_children-1-location").osmfield();});'
             '</script>',
             html
         )
