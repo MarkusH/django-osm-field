@@ -4,6 +4,12 @@
 History
 =======
 
+0.3.0 (development)
+===================
+
+* Added support for Django 1.8, 1.9, 1.10
+* Dropped support for Django 1.4, 1.5, 1.6
+
 0.2.0 (2014-11-10)
 ==================
 

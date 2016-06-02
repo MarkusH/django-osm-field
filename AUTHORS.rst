@@ -9,4 +9,5 @@ Credits
 Contributors
 ============
 
+* Drew Hubl
 * Sascha Narr
