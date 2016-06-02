@@ -65,6 +65,19 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
+            name='LocationWithDataModel',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, serialize=False, primary_key=True)),
+                ('location', osm_field.fields.OSMField(lat_field='latitude', lon_field='longitude', data_field='location_data')),
+                ('latitude', osm_field.fields.LatitudeField(validators=[osm_field.validators.validate_latitude])),
+                ('longitude', osm_field.fields.LongitudeField(validators=[osm_field.validators.validate_longitude])),
+                ('location_data', models.TextField()),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
             name='ParentModel',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', auto_created=True, serialize=False, primary_key=True)),

@@ -11,6 +11,7 @@
                 idAttribute = $(this).attr('id'),
                 idLatElement = $(this).data('lat-field'),
                 idLonElement = $(this).data('lon-field'),
+                idDataElement = $(this).data('data-field'),
                 osmfieldElement = $(this);
 
             if (idLatElement === undefined) {
@@ -25,6 +26,12 @@
                 idLonElement = '#id_' + idLonElement;
             }
 
+            if (idDataElement === undefined) {
+                idDataElement = '#' + idAttribute + '_data';
+            } else {
+                idDataElement = '#id_' + idDataElement;
+            }
+
             $(this).addClass('osmfield-input');
 
             // Create map container when not existent.
@@ -35,6 +42,7 @@
 
             $(this).data('lat-element', $(idLatElement));
             $(this).data('lng-element', $(idLonElement));
+            $(this).data('data-element', $(idDataElement));
             $(this).data('map-element', $('#' + idAttribute + '-map'));
             $(this).data('map-element').addClass('osmfield-map');
 
@@ -77,11 +85,12 @@
                             lat: position.lat,
                             lon: position.lng,
                             zoom: zoom,
-                            addressdetails: 0,
+                            addressdetails: 1,
                             'accept-language': language
                         },
                         function (data) {
                             osmfieldElement.val(data.display_name);
+                            osmfieldElement.data('data-element').val(JSON.stringify(data));
                         }
                     );
                 });
@@ -104,7 +113,7 @@
                             {
                                 format: 'json',
                                 q: nameInputElement.val(),
-                                addressdetails: 0,
+                                addressdetails: 1,
                                 'accept-language': language
                             },
                             function (data) {
@@ -112,19 +121,21 @@
                                 if (data.length) {
                                     var lat = data[0].lat,
                                         lng = data[0].lon,
-                                        // name = data[0].display_name;
-                                        newLatLng;
+                                        // name = data[0].display_name,
+                                        newLatLng = new L.LatLng(lat, lng),
+                                        eldata = JSON.stringify(data[0]);
 
                                     osmfieldElement.data('lat-element').val(lat);
                                     osmfieldElement.data('lng-element').val(lng);
+                                    osmfieldElement.data('data-element').val(eldata);
 
-                                    newLatLng = new L.LatLng(lat, lng);
                                     marker.setLatLng(newLatLng);
                                     map.panTo(newLatLng);
                                 } else {
                                     osmfieldElement.data('map-element').slideUp();
                                     osmfieldElement.data('lat-element').val('');
                                     osmfieldElement.data('lng-element').val('');
+                                    osmfieldElement.data('data-element').val('');
                                 }
 
                                 // Show map when INPUT has focus and coordinates are known
@@ -139,7 +150,6 @@
                                 } else {
                                     osmfieldElement.data('map-element').slideUp();
                                 }
-
                             }
                         );
                     })(nameInputElement);

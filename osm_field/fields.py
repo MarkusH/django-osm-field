@@ -130,6 +130,7 @@ class OSMField(TextField):
     def __init__(self, *args, **kwargs):
         self._lat_field_name = kwargs.pop('lat_field', None)
         self._lon_field_name = kwargs.pop('lon_field', None)
+        self.data_field_name = kwargs.pop('data_field', None)
         super(OSMField, self).__init__(*args, **kwargs)
 
     def contribute_to_class(self, cls, name):
@@ -204,6 +205,9 @@ class OSMField(TextField):
             'lat_field': self.latitude_field_name,
             'lon_field': self.longitude_field_name,
         }
+
+        if self.data_field_name:
+            widget_kwargs['data_field'] = self.data_field_name
 
         defaults = {
             'form_class': OSMFormField,
