@@ -2,17 +2,20 @@
 Django OSM Field
 ================
 
-.. image:: https://pypip.in/v/django-osm-field/badge.png
-   :target: https://crate.io/packages/django-osm-field/
+.. image:: https://img.shields.io/pypi/v/django-osm-field.svg
+   :target: https://pypi.python.org/pypi/django-osm-field
 
-.. image:: https://pypip.in/d/django-osm-field/badge.png
-   :target: https://crate.io/packages/django-osm-field/
+.. image:: https://img.shields.io/pypi/l/django-osm-field.svg
+   :target: https://pypi.python.org/pypi/django-osm-field
 
-.. image:: https://travis-ci.org/MarkusH/django-osm-field.png
+.. image:: https://img.shields.io/pypi/dm/django-osm-field.svg
+   :target: https://pypi.python.org/pypi/django-osm-field
+
+.. image:: https://img.shields.io/travis/MarkusH/django-osm-field/master.svg
    :target: https://travis-ci.org/MarkusH/django-osm-field
 
-.. image:: https://coveralls.io/repos/MarkusH/django-osm-field/badge.png?branch=develop
-   :target: https://coveralls.io/r/MarkusH/django-osm-field
+.. image:: https://img.shields.io/codecov/c/github/MarkusH/django-osm-field/master.svg
+   :target: https://codecov.io/github/MarkusH/django-osm-field
 
 
 Django OpenStreetMap Field

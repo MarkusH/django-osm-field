@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
-import sys
-
 from django.test import SimpleTestCase
 from django.test.utils import override_settings
 
-from .forms import (CustomNamingForm, DefaultNamingForm, MixedNamingForm,
-    MultipleNamingForm)
+from .forms import (
+    CustomNamingForm, DefaultNamingForm, MixedNamingForm, MultipleNamingForm,
+)
 
 
 class TestWidget(SimpleTestCase):

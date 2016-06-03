@@ -1,7 +1,9 @@
 from django import forms
 
-from .models import (CustomNamingModel, DefaultNamingModel, MixedNamingModel,
-    MultipleNamingModel)
+from .models import (
+    CustomNamingModel, DefaultNamingModel, MixedNamingModel,
+    MultipleNamingModel,
+)
 
 
 class CustomNamingForm(forms.ModelForm):

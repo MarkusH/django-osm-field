@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import models, migrations
-import osm_field.validators
+from django.db import migrations, models
+
 import osm_field.fields
+import osm_field.validators
 
 
 class Migration(migrations.Migration):

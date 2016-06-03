@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 from setuptools import setup
 
-
 readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
@@ -21,7 +20,7 @@ setup(
     package_dir={'osm_field': 'osm_field'},
     include_package_data=True,
     install_requires=[
-        'Django>=1.4',
+        'Django>=1.7',
         'six',
     ],
     license="MIT",
@@ -29,11 +28,16 @@ setup(
     keywords='OpenStreetMap, OSM, Django, Geo, Geoposition',
     classifiers=[
         'Development Status :: 4 - Beta',
+        'Environment :: Web Environment',
+        'Framework :: Django :: 1.10',
+        'Framework :: Django :: 1.7',
+        'Framework :: Django :: 1.8',
+        'Framework :: Django :: 1.9',
         'Framework :: Django',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
-        'Natural Language :: English',
-        "Programming Language :: Python :: 2",
+        'Operating System :: OS Independent',
+        'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
