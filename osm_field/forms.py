@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 import six
-
 from django.conf import settings
 from django.forms.widgets import Media, TextInput
 

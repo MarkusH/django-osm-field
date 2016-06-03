@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-try:  # noqa
-    from django.core import checks
-except ImportError:  # noqa: Django<1.7
-    pass
-
-from django.db.models.fields import TextField, FloatField, FieldDoesNotExist
+from django.core import checks
+from django.db.models.fields import FieldDoesNotExist, FloatField, TextField
 from django.utils.encoding import force_text, python_2_unicode_compatible
 
 from .forms import OSMWidget

@@ -16,12 +16,13 @@ env:
 install:
   - pip install https://github.com/django/django/archive/${DJANGO}.tar.gz
   - pip install -e .
-  - pip install coveralls django-discover-runner flake8
+  - pip install -r tests/requirements.txt
+  - pip install codecov
 
 script:
-  - flake8 osm_field --ignore=E128,E501
-  - coverage run `which django-admin.py` test -v 2 --pythonpath=./ --settings=tests.settings tests
-  - coverage xml
+  - flake8
+  - isort --recursive --check-only
+  - coverage run `which django-admin.py` test -v 2 --pythonpath=./ --settings=tests.settings
   - coverage report -m
 
 matrix:
@@ -40,4 +41,4 @@ matrix:
     - env: DJANGO=master
 
 after_success:
-    coveralls
+    codecov
