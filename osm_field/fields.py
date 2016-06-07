@@ -200,15 +200,18 @@ class OSMField(TextField):
         :returns: A :class:`~osm_field.forms.OSMFormField` with a
             :class:`~osm_field.widgets.OSMWidget`.
         """
-        widget = OSMWidget(
-            lat_field=self.latitude_field_name,
-            lon_field=self.longitude_field_name,
-        )
-        kwargs.update({
+        widget_kwargs = {
+            'lat_field': self.latitude_field_name,
+            'lon_field': self.longitude_field_name,
+        }
+
+        defaults = {
             'form_class': OSMFormField,
-            'widget': widget,
-        })
-        return super(OSMField, self).formfield(**kwargs)
+            'widget': OSMWidget(**widget_kwargs),
+        }
+        defaults.update(kwargs)
+
+        return super(OSMField, self).formfield(**defaults)
 
     @property
     def latitude_field_name(self):
