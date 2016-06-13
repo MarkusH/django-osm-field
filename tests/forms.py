@@ -4,6 +4,7 @@ from .models import (
     ChildModel, CustomNamingModel, DefaultNamingModel, MixedNamingModel,
     MultipleNamingModel, ParentModel,
 )
+from osm_field.forms import OSMWidget  # Should eventually be osm_field.widgets
 
 from osm_field.forms import OSMFormMixin
 
@@ -37,6 +38,28 @@ class MultipleNamingForm(forms.ModelForm):
             'custom_location', 'custom_latitude', 'custom_longitude',
         )
         model = MultipleNamingModel
+
+
+class FieldWidgetWithClassNameForm(forms.ModelForm):
+    location = forms.CharField(widget=OSMWidget('location_lat', 'location_lon', attrs={
+        'class': 'custom-class',
+    }))
+
+    class Meta:
+        fields = ('location', 'location_lat', 'location_lon', )
+        model = DefaultNamingModel
+
+
+class WidgetsWidgetWithClassNameForm(forms.ModelForm):
+
+    class Meta:
+        fields = ('location', 'location_lat', 'location_lon', )
+        model = DefaultNamingModel
+        widgets = {
+            'location': OSMWidget('location_lat', 'location_lon', attrs={
+                'class': 'custom-class',
+            }),
+        }
 
 
 class ChildModelInlineForm(OSMFormMixin, forms.ModelForm):

@@ -4,8 +4,9 @@ from django.test import SimpleTestCase
 from django.test.utils import override_settings
 
 from .forms import (
-    ChildModelFormset, CustomNamingForm, DefaultNamingForm, MixedNamingForm,
-    MultipleNamingForm,
+    ChildModelFormset, CustomNamingForm, DefaultNamingForm,
+    FieldWidgetWithClassNameForm, MixedNamingForm, MultipleNamingForm,
+    WidgetsWidgetWithClassNameForm,
 )
 
 
@@ -77,6 +78,14 @@ class TestWidget(SimpleTestCase):
             '</script>',
             html
         )
+
+    def test_field_widget_contains_class(self):
+        html = FieldWidgetWithClassNameForm().as_p()
+        self.assertIn('class="custom-class osmfield"', html)
+
+    def test_widgets_widget_contains_class(self):
+        html = WidgetsWidgetWithClassNameForm().as_p()
+        self.assertIn('class="custom-class osmfield"', html)
 
     def test_widget_prefix_in_formset(self):
         html = ChildModelFormset().as_p()
