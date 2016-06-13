@@ -14,8 +14,8 @@ from .models import (
 )
 
 from osm_field.fields import LatitudeField, Location, LongitudeField, OSMField
-from osm_field.forms import OSMWidget
 from osm_field.validators import validate_latitude, validate_longitude
+from osm_field.widgets import OSMWidget
 
 try:
     from django.core.checks import Error

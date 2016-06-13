@@ -60,6 +60,55 @@ Form Layer
             model = MyModel
 
 
+Formset Layer
+=============
+
+To use OSMField with formsets with Django < 1.9, you must mixin the
+:class:`~forms.OSMFormMixin` to your child form class:
+
+``models.py``:
+
+.. code-block:: python
+
+    from django.db import models
+
+    from osm_field.fields import LatitudeField, LongitudeField, OSMField
+
+
+    class ParentModel(models.Model):
+        name = models.CharField(max_length=31)
+
+
+    class ChildModel(models.Model):
+        parent = models.ForeignKey(ParentModel, related_name='children')
+        location = OSMField()
+        location_lat = LatitudeField()
+        location_lon = LongitudeField()
+
+``forms.py``:
+
+.. code-block:: python
+
+    from django import forms
+
+    from osm_field.forms import OSMFormMixin
+
+    from .models import ChildModel, ParentModel
+
+
+    class ChildModelInlineForm(OSMFormMixin, forms.ModelForm):
+        class Meta:
+            fields = ('location', 'location_lat', 'location_lon', )
+            model = ChildModel
+
+    ChildModelFormset = forms.models.inlineformset_factory(
+        ParentModel, ChildModel, form=ChildModelInlineForm
+    )
+
+Note that you ONLY need to do this for Django < 1.9, but this will still work
+without modification (but is unnecessary) for Django >= 1.9.
+
+
 View Layer
 ==========
 

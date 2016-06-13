@@ -64,4 +64,27 @@ class Migration(migrations.Migration):
             },
             bases=(models.Model,),
         ),
+        migrations.CreateModel(
+            name='ParentModel',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, serialize=False, primary_key=True)),
+                ('name', models.CharField(max_length=31)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='ChildModel',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, serialize=False, primary_key=True)),
+                ('parent', models.ForeignKey(related_name='children', to='tests.ParentModel')),
+                ('location', osm_field.fields.OSMField(lat_field='location_lat', lon_field='location_lon')),
+                ('location_lat', osm_field.fields.LatitudeField(validators=[osm_field.validators.validate_latitude])),
+                ('location_lon', osm_field.fields.LongitudeField(validators=[osm_field.validators.validate_longitude])),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
     ]

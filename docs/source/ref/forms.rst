@@ -4,9 +4,17 @@ Forms
 
 .. py:module:: osm_field.forms
 
-OSMWidget
-=========
+OSMBoundField
+=============
 
-.. autoclass:: OSMWidget
+.. autoclass:: OSMBoundField
+    :members:
+    :show-inheritance:
+
+
+OSMFormField
+============
+
+.. autoclass:: OSMFormField
     :members:
     :show-inheritance:

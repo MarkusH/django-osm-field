@@ -5,8 +5,9 @@ from django.core import checks
 from django.db.models.fields import FieldDoesNotExist, FloatField, TextField
 from django.utils.encoding import force_text, python_2_unicode_compatible
 
-from .forms import OSMWidget
+from .forms import OSMFormField
 from .validators import validate_latitude, validate_longitude
+from .widgets import OSMWidget
 
 
 @python_2_unicode_compatible
@@ -196,12 +197,15 @@ class OSMField(TextField):
 
     def formfield(self, **kwargs):
         """
-        :returns: A :class:`~django.forms.CharField` with a
-            :class:`~osm_field.forms.OSMWidget`.
+        :returns: A :class:`~osm_field.forms.OSMFormField` with a
+            :class:`~osm_field.widgets.OSMWidget`.
         """
-        widget = OSMWidget(lat_field=self.latitude_field_name,
-            lon_field=self.longitude_field_name)
+        widget = OSMWidget(
+            lat_field=self.latitude_field_name,
+            lon_field=self.longitude_field_name,
+        )
         kwargs.update({
+            'form_class': OSMFormField,
             'widget': widget,
         })
         return super(OSMField, self).formfield(**kwargs)
