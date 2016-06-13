@@ -32,6 +32,14 @@ class MultipleNamingModel(models.Model):
     custom_longitude = LongitudeField()
 
 
+class LocationWithDataModel(models.Model):
+    location = OSMField(lat_field='latitude', lon_field='longitude',
+        data_field='location_data')
+    latitude = LatitudeField()
+    longitude = LongitudeField()
+    location_data = models.TextField()
+
+
 class ParentModel(models.Model):
     name = models.CharField(max_length=31)
 

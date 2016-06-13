@@ -6,7 +6,7 @@ from django.test.utils import override_settings
 from .forms import (
     ChildModelFormset, CustomNamingForm, DefaultNamingForm,
     FieldWidgetWithClassNameForm, MixedNamingForm, MultipleNamingForm,
-    WidgetsWidgetWithClassNameForm,
+    WidgetsWidgetWithClassNameForm, WithDataForm,
 )
 
 
@@ -116,6 +116,22 @@ class TestWidget(SimpleTestCase):
         self.assertIn(
             '<script type="application/javascript">'
             '$(function(){$("#id_children-1-location").osmfield();});'
+            '</script>',
+            html
+        )
+
+    def test_widget_location_data_field(self):
+        html = WithDataForm().as_p()
+        self.assertIn('name="location"', html)
+        self.assertIn('data-lat-field="latitude"', html)
+        self.assertIn('data-lon-field="longitude"', html)
+        self.assertIn('data-data-field="location_data"', html)
+        self.assertIn('name="latitude"', html)
+        self.assertIn('name="longitude"', html)
+        self.assertIn('name="location_data"', html)
+        self.assertIn(
+            '<script type="application/javascript">'
+            '$(function(){$("#id_location").osmfield();});'
             '</script>',
             html
         )

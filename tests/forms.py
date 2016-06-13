@@ -1,12 +1,12 @@
 from django import forms
 
 from .models import (
-    ChildModel, CustomNamingModel, DefaultNamingModel, MixedNamingModel,
-    MultipleNamingModel, ParentModel,
+    ChildModel, CustomNamingModel, DefaultNamingModel, LocationWithDataModel,
+    MixedNamingModel, MultipleNamingModel, ParentModel,
 )
-from osm_field.forms import OSMWidget  # Should eventually be osm_field.widgets
 
 from osm_field.forms import OSMFormMixin
+from osm_field.widgets import OSMWidget
 
 
 class CustomNamingForm(forms.ModelForm):
@@ -71,3 +71,10 @@ class ChildModelInlineForm(OSMFormMixin, forms.ModelForm):
 ChildModelFormset = forms.models.inlineformset_factory(
     ParentModel, ChildModel, extra=2, form=ChildModelInlineForm,
 )
+
+
+class WithDataForm(forms.ModelForm):
+
+    class Meta:
+        fields = ('location', 'latitude', 'longitude', 'location_data', )
+        model = LocationWithDataModel
