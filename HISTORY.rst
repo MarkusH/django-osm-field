@@ -4,6 +4,14 @@
 History
 =======
 
+0.3.0 (2016-07-23)
+==================
+
+* Switched from MapQuest to CartoDB (#15)
+* Dropped Django <= 1.6 support
+* Fixed bug in formsets (#7)
+* Added ``location_data`` field
+
 0.2.0 (2014-11-10)
 ==================
 
