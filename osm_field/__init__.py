@@ -2,6 +2,6 @@
 
 __author__ = 'Markus Holtermann, et al'
 __email__ = 'info@markusholtermann.eu'
-__version__ = '0.2.0'
+__version__ = '0.3.0'
 
 default_app_config = 'osm_field.apps.OSMFieldConfig'
