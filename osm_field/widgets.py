@@ -77,6 +77,8 @@ class OSMWidget(TextInput):
                 'data-lat-field': '{}-{}'.format(prefix, attrs.get('data-lat-field', self.attrs['data-lat-field'])),
                 'data-lon-field': '{}-{}'.format(prefix, attrs.get('data-lon-field', self.attrs['data-lon-field'])),
             })
+            if 'data-data-field' in self.attrs:
+                attrs['data-data-field'] = '{}-{}'.format(prefix, attrs.get('data-data-field', self.attrs['data-data-field']))
         ret = super(OSMWidget, self).render(name, value, attrs=attrs)
         id_ = attrs['id']
         ret += self.render_osmfield(id_)
