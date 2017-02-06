@@ -36,3 +36,5 @@ Releasing
 * Push changes and tags to Github
 * Build Python packages with ``python setup.py sdist bdist_wheel``
 * Upload package with ``twine upload -s dist/[.whl-FILE-TO-UPLOAD] dist/[.tar.gz-FILE-TO-UPLOAD]``.
+* Change to branch ``develop``
+* Merge branch ``master``
