@@ -4,8 +4,14 @@
 History
 =======
 
+0.3.1 (2017-02-06)
+==================
+
+* Properly rendered widgets in formsets
+* Added preliminary support for Django 1.11
+
 0.3.0 (2016-07-23)
-===================
+==================
 
 * Added support for Django 1.8, 1.9, 1.10
 * Dropped support for Django 1.4, 1.5, 1.6
