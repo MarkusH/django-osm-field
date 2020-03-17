@@ -1,25 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import six
-
 from django.conf import settings
 from django.forms.widgets import Media, TextInput
-
-try:
-    from django.utils.html import format_html
-except ImportError:
-    from django.utils.html import conditional_escape, mark_safe
-
-    def format_html(format_string, *args, **kwargs):
-        """
-        Similar to str.format, but passes all arguments through conditional_escape,
-        and calls 'mark_safe' on the result. This function should be used instead
-        of str.format or % interpolation to build up small HTML fragments.
-        """
-        args_safe = map(conditional_escape, args)
-        kwargs_safe = dict((k, conditional_escape(v)) for (k, v) in six.iteritems(kwargs))
-        return mark_safe(format_string.format(*args_safe, **kwargs_safe))
+from django.utils.html import format_html
 
 
 def _get_js(debug=False):
@@ -68,7 +52,7 @@ class OSMWidget(TextInput):
             attrs['class'] = 'osmfield'
         super(OSMWidget, self).__init__(attrs=attrs)
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         attrs = {} if attrs is None else attrs.copy()
         # For Django < 1.9, we need to grab self.attrs instead
         prefix = attrs.get('prefix', self.attrs.get('prefix', ''))

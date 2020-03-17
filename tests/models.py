@@ -45,7 +45,7 @@ class ParentModel(models.Model):
 
 
 class ChildModel(models.Model):
-    parent = models.ForeignKey(ParentModel, related_name='children')
+    parent = models.ForeignKey(ParentModel, related_name='children', on_delete=models.CASCADE)
     location = OSMField()
     location_lat = LatitudeField()
     location_lon = LongitudeField()

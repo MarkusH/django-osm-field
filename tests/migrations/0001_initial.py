@@ -91,7 +91,7 @@ class Migration(migrations.Migration):
             name='ChildModel',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', auto_created=True, serialize=False, primary_key=True)),
-                ('parent', models.ForeignKey(related_name='children', to='tests.ParentModel')),
+                ('parent', models.ForeignKey(related_name='children', to='tests.ParentModel', on_delete=models.CASCADE)),
                 ('location', osm_field.fields.OSMField(lat_field='location_lat', lon_field='location_lon')),
                 ('location_lat', osm_field.fields.LatitudeField(validators=[osm_field.validators.validate_latitude])),
                 ('location_lon', osm_field.fields.LongitudeField(validators=[osm_field.validators.validate_longitude])),

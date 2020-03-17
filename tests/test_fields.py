@@ -6,7 +6,6 @@ from unittest import skipIf
 import django
 from django.db import models
 from django.test import SimpleTestCase, TestCase
-from django.utils.six import assertRaisesRegex
 
 from .models import (
     CustomNamingModel, DefaultNamingModel, MixedNamingModel,
@@ -93,11 +92,9 @@ class TestDeconstruction(TestCase):
 
     def test_osm_field_raise_without_name(self):
         field = OSMField()
-        assertRaisesRegex(self, TypeError, 'unsupported operand', field.deconstruct)
+        self.assertRaisesRegex(TypeError, 'unsupported operand', field.deconstruct)
 
 
-@skipIf(django.VERSION[:2] < (1, 7),
-        "Checks have been introduced in Django 1.7")
 class TestFieldChecks(TestCase):
 
     def setUp(self):
