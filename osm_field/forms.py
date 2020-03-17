@@ -1,13 +1,8 @@
 import django
+from django.forms import BoundField, CharField
 
 # For reverse compatibility
-from .widgets import OSMWidget  # flake8: noqa
-
-try:
-    from django.forms import BoundField, CharField, FloatField
-except ImportError:
-    from django.forms import CharField, FloatField
-    from django.forms.forms import BoundField
+from .widgets import OSMWidget  # noqa: F401
 
 
 class PrefixedBoundField(BoundField):

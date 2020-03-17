@@ -2,15 +2,15 @@
 from __future__ import unicode_literals
 
 from django.core import checks
-from django.db.models.fields import FieldDoesNotExist, FloatField, TextField
-from django.utils.encoding import force_text, python_2_unicode_compatible
+from django.core.exceptions import FieldDoesNotExist
+from django.db.models.fields import FloatField, TextField
+from django.utils.encoding import force_text
 
 from .forms import OSMFormField
 from .validators import validate_latitude, validate_longitude
 from .widgets import OSMWidget
 
 
-@python_2_unicode_compatible
 class Location(object):
     """
     A wrapper class bundling the description of a location (``text``) and its
@@ -49,10 +49,10 @@ class Location(object):
 
     def __eq__(self, other):
         return (
-            isinstance(other, self.__class__) and
-            self.lat == other.lat and
-            self.lon == other.lon and
-            self.text == other.text
+            isinstance(other, self.__class__)
+            and self.lat == other.lat
+            and self.lon == other.lon
+            and self.text == other.text
         )
 
     def __ne__(self, other):
@@ -234,16 +234,3 @@ class OSMField(TextField):
         if self._lon_field_name is None:
             self._lon_field_name = self.name + '_lon'
         return self._lon_field_name
-
-
-try:
-    from south.modelsinspector import add_introspection_rules
-    add_introspection_rules(
-        [],
-        [
-            "^osm_field\.fields\.LatitudeField",
-            "^osm_field\.fields\.LongitudeField",
-            "^osm_field\.fields\.OSMField",
-        ])
-except ImportError:
-    pass

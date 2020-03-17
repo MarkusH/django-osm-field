@@ -4,6 +4,11 @@
 History
 =======
 
+Unreleased
+==========
+
+* Added support for Django 2.2 and 3.0.
+
 0.3.1 (2017-02-06)
 ==================
 
