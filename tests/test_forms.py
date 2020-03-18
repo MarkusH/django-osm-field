@@ -142,18 +142,20 @@ class TestMedia(SimpleTestCase):
     @override_settings(DEBUG=True)
     def test_css_debug(self):
         css = DefaultNamingForm().media.render_css()
-        self.assertEqual(
-            '<link href="css/vendor/leaflet.css" type="text/css" media="screen" rel="stylesheet">'
-            '<link href="css/osm_field.css" type="text/css" media="screen" rel="stylesheet">',
-            ''.join(css)
-        )
+        self.assertIn(
+            '<link href="css/vendor/leaflet.css" type="text/css" media="screen" rel="stylesheet"', next(css)
+            )
+        self.assertIn(
+            '<link href="css/osm_field.css" type="text/css" media="screen" rel="stylesheet"', next(css)
+            )
 
     def test_css_no_debug(self):
         css = DefaultNamingForm().media.render_css()
-        self.assertEqual(
-            '<link href="css/vendor/leaflet.css" type="text/css" media="screen" rel="stylesheet">'
-            '<link href="css/osm_field.min.css" type="text/css" media="screen" rel="stylesheet">',
-            ''.join(css)
+        self.assertIn(
+            '<link href="css/vendor/leaflet.css" type="text/css" media="screen" rel="stylesheet"', next(css)
+        )
+        self.assertIn(
+            '<link href="css/osm_field.min.css" type="text/css" media="screen" rel="stylesheet"', next(css)
         )
 
     @override_settings(DEBUG=True)
