@@ -15,6 +15,9 @@ env:
 jobs:
   allow_failures:
   - env: DJANGO_VERSION='https://github.com/django/django/archive/master.tar.gz'
+  exclude:
+  - python: "3.5"
+    env: DJANGO_VERSION='Django>=3.0,<3.1'
 
 before_script:
   - pip install -U pip
