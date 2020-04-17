@@ -10,7 +10,7 @@ def validate_latitude(value):
         ``value`` is not within the range.
     """
     if value < -90 or value > 90:
-        raise ValidationError('invalid latitude')
+        raise ValidationError("invalid latitude")
 
 
 def validate_longitude(value):
@@ -21,4 +21,4 @@ def validate_longitude(value):
         ``value`` is not within the range.
     """
     if value < -180 or value > 180:
-        raise ValidationError('invalid longitude')
+        raise ValidationError("invalid longitude")

@@ -5,14 +5,18 @@ from django.test import SimpleTestCase
 from django.test.utils import override_settings
 
 from .forms import (
-    ChildModelFormset, CustomNamingForm, DefaultNamingForm,
-    FieldWidgetWithClassNameForm, MixedNamingForm, MultipleNamingForm,
-    WidgetsWidgetWithClassNameForm, WithDataForm,
+    ChildModelFormset,
+    CustomNamingForm,
+    DefaultNamingForm,
+    FieldWidgetWithClassNameForm,
+    MixedNamingForm,
+    MultipleNamingForm,
+    WidgetsWidgetWithClassNameForm,
+    WithDataForm,
 )
 
 
 class TestWidget(SimpleTestCase):
-
     def test_custom_naming(self):
         html = CustomNamingForm().as_p()
         self.assertIn('name="location"', html)
@@ -23,8 +27,8 @@ class TestWidget(SimpleTestCase):
         self.assertIn(
             '<script type="application/javascript">'
             '$(function(){$("#id_location").osmfield();});'
-            '</script>',
-            html
+            "</script>",
+            html,
         )
 
     def test_default_naming(self):
@@ -37,8 +41,8 @@ class TestWidget(SimpleTestCase):
         self.assertIn(
             '<script type="application/javascript">'
             '$(function(){$("#id_location").osmfield();});'
-            '</script>',
-            html
+            "</script>",
+            html,
         )
 
     def test_mixed_naming(self):
@@ -51,8 +55,8 @@ class TestWidget(SimpleTestCase):
         self.assertIn(
             '<script type="application/javascript">'
             '$(function(){$("#id_location").osmfield();});'
-            '</script>',
-            html
+            "</script>",
+            html,
         )
 
     def test_multiple_naming(self):
@@ -65,8 +69,8 @@ class TestWidget(SimpleTestCase):
         self.assertIn(
             '<script type="application/javascript">'
             '$(function(){$("#id_default_location").osmfield();});'
-            '</script>',
-            html
+            "</script>",
+            html,
         )
         self.assertIn('name="custom_location"', html)
         self.assertIn('data-lat-field="custom_latitude"', html)
@@ -76,8 +80,8 @@ class TestWidget(SimpleTestCase):
         self.assertIn(
             '<script type="application/javascript">'
             '$(function(){$("#id_custom_location").osmfield();});'
-            '</script>',
-            html
+            "</script>",
+            html,
         )
 
     def test_field_widget_contains_class(self):
@@ -102,8 +106,8 @@ class TestWidget(SimpleTestCase):
         self.assertIn(
             '<script type="application/javascript">'
             '$(function(){$("#id_children-0-location").osmfield();});'
-            '</script>',
-            html
+            "</script>",
+            html,
         )
         # Check for form 1
         self.assertIn('id="id_children-1-location"', html)
@@ -117,8 +121,8 @@ class TestWidget(SimpleTestCase):
         self.assertIn(
             '<script type="application/javascript">'
             '$(function(){$("#id_children-1-location").osmfield();});'
-            '</script>',
-            html
+            "</script>",
+            html,
         )
 
     def test_widget_location_data_field(self):
@@ -133,30 +137,37 @@ class TestWidget(SimpleTestCase):
         self.assertIn(
             '<script type="application/javascript">'
             '$(function(){$("#id_location").osmfield();});'
-            '</script>',
-            html
+            "</script>",
+            html,
         )
 
 
 class TestMedia(SimpleTestCase):
-
     @override_settings(DEBUG=True)
     def test_css_debug(self):
         css = DefaultNamingForm().media.render_css()
         self.assertIn(
-            '<link href="css/vendor/leaflet.css" type="text/css" media="screen" rel="stylesheet"', next(css)
-            )
+            '<link href="css/vendor/leaflet.css" type="text/css" media="screen" '
+            'rel="stylesheet"',
+            next(css),
+        )
         self.assertIn(
-            '<link href="css/osm_field.css" type="text/css" media="screen" rel="stylesheet"', next(css)
-            )
+            '<link href="css/osm_field.css" type="text/css" media="screen" '
+            'rel="stylesheet"',
+            next(css),
+        )
 
     def test_css_no_debug(self):
         css = DefaultNamingForm().media.render_css()
         self.assertIn(
-            '<link href="css/vendor/leaflet.css" type="text/css" media="screen" rel="stylesheet"', next(css)
+            '<link href="css/vendor/leaflet.css" type="text/css" media="screen" '
+            'rel="stylesheet"',
+            next(css),
         )
         self.assertIn(
-            '<link href="css/osm_field.min.css" type="text/css" media="screen" rel="stylesheet"', next(css)
+            '<link href="css/osm_field.min.css" type="text/css" media="screen" '
+            'rel="stylesheet"',
+            next(css),
         )
 
     @override_settings(DEBUG=True)
@@ -166,13 +177,13 @@ class TestMedia(SimpleTestCase):
             self.assertEqual(
                 '<script src="js/vendor/leaflet.js"></script>'
                 '<script src="js/osm_field.js"></script>',
-                ''.join(js)
+                "".join(js),
             )
         else:
             self.assertEqual(
                 '<script type="text/javascript" src="js/vendor/leaflet.js"></script>'
                 '<script type="text/javascript" src="js/osm_field.js"></script>',
-                ''.join(js)
+                "".join(js),
             )
 
     def test_js_no_debug(self):
@@ -181,11 +192,11 @@ class TestMedia(SimpleTestCase):
             self.assertEqual(
                 '<script src="js/vendor/leaflet.js"></script>'
                 '<script src="js/osm_field.min.js"></script>',
-                ''.join(js)
+                "".join(js),
             )
         else:
             self.assertEqual(
                 '<script type="text/javascript" src="js/vendor/leaflet.js"></script>'
                 '<script type="text/javascript" src="js/osm_field.min.js"></script>',
-                ''.join(js)
+                "".join(js),
             )

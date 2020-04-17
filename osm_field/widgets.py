@@ -7,20 +7,20 @@ from django.utils.html import format_html
 
 
 def _get_js(debug=False):
-    base = ['js/vendor/leaflet.js']
+    base = ["js/vendor/leaflet.js"]
     if debug:
-        base.extend(['js/osm_field.js'])
+        base.extend(["js/osm_field.js"])
     else:
-        base.extend(['js/osm_field.min.js'])
+        base.extend(["js/osm_field.min.js"])
     return base
 
 
 def _get_css(debug=False):
-    base = ['css/vendor/leaflet.css']
+    base = ["css/vendor/leaflet.css"]
     if debug:
-        base.extend(['css/osm_field.css'])
+        base.extend(["css/osm_field.css"])
     else:
-        base.extend(['css/osm_field.min.css'])
+        base.extend(["css/osm_field.min.css"])
     return base
 
 
@@ -34,41 +34,50 @@ class OSMWidget(TextInput):
     @property
     def media(self):
         return Media(
-            css={'screen': _get_css(settings.DEBUG)},
-            js=_get_js(settings.DEBUG)
+            css={"screen": _get_css(settings.DEBUG)}, js=_get_js(settings.DEBUG)
         )
 
     def __init__(self, lat_field, lon_field, data_field=None, attrs=None):
         attrs = {} if attrs is None else attrs.copy()
-        attrs.update({
-            'data-lat-field': lat_field,
-            'data-lon-field': lon_field,
-        })
+        attrs.update({"data-lat-field": lat_field, "data-lon-field": lon_field})
         if data_field:
-            attrs['data-data-field'] = data_field
-        if 'class' in attrs:
-            attrs['class'] += ' osmfield'
+            attrs["data-data-field"] = data_field
+        if "class" in attrs:
+            attrs["class"] += " osmfield"
         else:
-            attrs['class'] = 'osmfield'
+            attrs["class"] = "osmfield"
         super(OSMWidget, self).__init__(attrs=attrs)
 
     def render(self, name, value, attrs=None, renderer=None):
         attrs = {} if attrs is None else attrs.copy()
         # For Django < 1.9, we need to grab self.attrs instead
-        prefix = attrs.get('prefix', self.attrs.get('prefix', ''))
+        prefix = attrs.get("prefix", self.attrs.get("prefix", ""))
         if prefix:
-            attrs.update({
-                'data-lat-field': '{}-{}'.format(prefix, attrs.get('data-lat-field', self.attrs['data-lat-field'])),
-                'data-lon-field': '{}-{}'.format(prefix, attrs.get('data-lon-field', self.attrs['data-lon-field'])),
-            })
-            if 'data-data-field' in self.attrs:
-                attrs['data-data-field'] = '{}-{}'.format(prefix, attrs.get('data-data-field', self.attrs['data-data-field']))
+            attrs.update(
+                {
+                    "data-lat-field": "{}-{}".format(
+                        prefix,
+                        attrs.get("data-lat-field", self.attrs["data-lat-field"]),
+                    ),
+                    "data-lon-field": "{}-{}".format(
+                        prefix,
+                        attrs.get("data-lon-field", self.attrs["data-lon-field"]),
+                    ),
+                }
+            )
+            if "data-data-field" in self.attrs:
+                attrs["data-data-field"] = "{}-{}".format(
+                    prefix, attrs.get("data-data-field", self.attrs["data-data-field"])
+                )
         ret = super(OSMWidget, self).render(name, value, attrs=attrs)
-        id_ = attrs['id']
+        id_ = attrs["id"]
         ret += self.render_osmfield(id_)
         return ret
 
     def render_osmfield(self, id_):
         # we need {{ and }} because of .format() working with {}
-        return format_html('<script type="application/javascript">$(function()'
-                           '{{$("#{0}").osmfield();}});</script>', id_)
+        return format_html(
+            '<script type="application/javascript">$(function()'
+            '{{$("#{0}").osmfield();}});</script>',
+            id_,
+        )

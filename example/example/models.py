@@ -8,7 +8,7 @@ class ExampleModel(models.Model):
     location = OSMField()
     location_lat = LatitudeField()
     location_lon = LongitudeField()
-    another = OSMField(lat_field='some_lat_field', lon_field='other_lon_field')
+    another = OSMField(lat_field="some_lat_field", lon_field="other_lon_field")
     some_lat_field = LatitudeField()
     other_lon_field = LongitudeField()
 
@@ -16,4 +16,4 @@ class ExampleModel(models.Model):
         return str(self.get_location_info())
 
     def get_absolute_url(self):
-        return reverse('detail', kwargs={'pk': self.pk})
+        return reverse("detail", kwargs={"pk": self.pk})
