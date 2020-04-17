@@ -1,0 +1,6 @@
+[run]
+branch = True
+source = osm_field/
+
+[report]
+show_missing = True

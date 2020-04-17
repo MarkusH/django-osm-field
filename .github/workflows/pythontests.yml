@@ -1,0 +1,116 @@
+name: CI
+
+on:
+  push:
+    branches:
+    - master
+    - "[0-9]+.[0-9]+"
+  pull_request:
+    branches:
+    - master
+    - "[0-9]+.[0-9]+"
+
+jobs:
+  black:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip black
+    - name: Running black
+      run: |
+        black --check --diff .
+
+  flake8:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip flake8
+    - name: Running flake8
+      run: |
+        flake8 --count --show-source --statistics
+
+  isort:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip isort
+    - name: Running isort
+      run: |
+        isort --check-only --diff --recursive
+
+  tests:
+    needs: [black, flake8, isort]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version:
+        - "3.5"
+        - "3.6"
+        - "3.7"
+        - "3.8"
+        django-version:
+        - "2.2"
+        - "3.0"
+        - "master"
+        exclude:
+        # Python 3.5 is compatible with Django <3.0
+        - python-version: "3.5"
+          django-version: "3.0"
+        - python-version: "3.5"
+          django-version: "master"
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Upgrade pip version
+      run: |
+        python -m pip install -U pip
+
+    - name: Upgrade Django version
+      run: |
+        if [ "${{ matrix.django-version }}" == "master" ] ; then
+          python -m pip install "https://github.com/django/django/archive/master.tar.gz"
+        else
+          python -m pip install "Django~=${{ matrix.django-version }}.0"
+        fi
+
+    - name: Python and Django versions
+      run: |
+        echo "Python ${{ matrix.python-version }} -> Django ${{ matrix.django-version }}"
+        python --version
+        echo "Django: `django-admin --version`"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install -e '.[testing]'
+
+    - name: Running tests
+      run: |
+        coverage run "$(command -v django-admin.py)" test -v 2 --settings=tests.settings
+        coverage report
+        coverage xml
+
+    - name: Upload coverage to codecov.io
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}

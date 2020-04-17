@@ -1,5 +1,1 @@
-coverage:
-  status:
-    patch:
-      default:
-        branches: null
+comment: false

@@ -9,7 +9,7 @@ Contents:
    installation
    usage
    authors
-   history
+   changes
    ref/index
 
 
