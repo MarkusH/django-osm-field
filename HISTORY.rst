@@ -7,7 +7,10 @@ History
 Unreleased
 ==========
 
-* Added support for Django 2.2 and 3.0.
+0.4.0 (2020-04-17)
+==================
+
+* Added support for Django 2.2 and 3.0 and dropped support for everything before.
 
 0.3.1 (2017-02-06)
 ==================
