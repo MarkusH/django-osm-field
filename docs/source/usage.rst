@@ -12,7 +12,7 @@ You need to add three model fields to your model:
 1. :class:`~fields.OSMField`
 2. :class:`~fields.LatitudeField`
 3. :class:`~fields.LongitudeField`
-   
+
 **django-osm-field** expects them to have a certain name schema: The
 :class:`~fields.OSMField` defines the base name, the
 :class:`~fields.LatitudeField` and :class:`~fields.LongitudeField` have the
@@ -60,55 +60,6 @@ Form Layer
             model = MyModel
 
 
-Formset Layer
-=============
-
-To use OSMField with formsets with Django < 1.9, you must mixin the
-:class:`~forms.OSMFormMixin` to your child form class:
-
-``models.py``:
-
-.. code-block:: python
-
-    from django.db import models
-
-    from osm_field.fields import LatitudeField, LongitudeField, OSMField
-
-
-    class ParentModel(models.Model):
-        name = models.CharField(max_length=31)
-
-
-    class ChildModel(models.Model):
-        parent = models.ForeignKey(ParentModel, related_name='children')
-        location = OSMField()
-        location_lat = LatitudeField()
-        location_lon = LongitudeField()
-
-``forms.py``:
-
-.. code-block:: python
-
-    from django import forms
-
-    from osm_field.forms import OSMFormMixin
-
-    from .models import ChildModel, ParentModel
-
-
-    class ChildModelInlineForm(OSMFormMixin, forms.ModelForm):
-        class Meta:
-            fields = ('location', 'location_lat', 'location_lon', )
-            model = ChildModel
-
-    ChildModelFormset = forms.models.inlineformset_factory(
-        ParentModel, ChildModel, form=ChildModelInlineForm
-    )
-
-Note that you ONLY need to do this for Django < 1.9, but this will still work
-without modification (but is unnecessary) for Django >= 1.9.
-
-
 View Layer
 ==========
 
@@ -130,7 +81,7 @@ View Layer
 Template Layer
 ==============
 
-**django-osm-field** shipps with a minimized `jQuery`_ version. To access it in a template use the ``static`` templatetag from the ``staticfiles`` Django app:
+**django-osm-field** shipps with a minimized `jQuery`_ version. To access it in a template use the ``static`` templatetag:
 
 .. code-block:: django
 
@@ -156,7 +107,7 @@ In the end your template should look similar to this:
 
 .. code-block:: django
 
-    {% load static from staticfiles %}<!DOCTYPE HTML>
+    {% load static %}<!DOCTYPE HTML>
     <html>
       <head>
         <title></title>
@@ -174,6 +125,6 @@ In the end your template should look similar to this:
           <input type="submit" value="Save" />
         </form>
       </body>
-    </html> 
+    </html>
 
 .. _jQuery: http://jquery.com/download/

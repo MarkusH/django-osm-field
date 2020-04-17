@@ -2,35 +2,7 @@
 Fields
 ======
 
-.. py:module:: osm_field.fields
-
-
-OSMField
-========
-
-.. autoclass:: OSMField
+.. automodule:: osm_field.fields
    :members:
-
-
-LatitudeField
-=============
-
-.. autoclass:: LatitudeField 
-   :members:
-
-
-LongitudeField
-==============
-
-.. autoclass:: LongitudeField
-   :members:
-
-
-Utilities
-=========
-
-Location
---------
-
-.. autoclass:: Location 
-   :members: __str__
+   :undoc-members:
+   :show-inheritance:

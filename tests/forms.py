@@ -5,7 +5,6 @@ from .models import (
     MixedNamingModel, MultipleNamingModel, ParentModel,
 )
 
-from osm_field.forms import OSMFormMixin
 from osm_field.widgets import OSMWidget
 
 
@@ -62,7 +61,7 @@ class WidgetsWidgetWithClassNameForm(forms.ModelForm):
         }
 
 
-class ChildModelInlineForm(OSMFormMixin, forms.ModelForm):
+class ChildModelInlineForm(forms.ModelForm):
     class Meta:
         fields = ('location', 'location_lat', 'location_lon', )
         model = ChildModel

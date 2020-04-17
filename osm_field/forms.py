@@ -1,8 +1,4 @@
-import django
 from django.forms import BoundField, CharField
-
-# For reverse compatibility
-from .widgets import OSMWidget  # noqa: F401
 
 
 class PrefixedBoundField(BoundField):
@@ -35,13 +31,3 @@ class PrefixedFormFieldMixin(object):
 
 class OSMFormField(PrefixedFormFieldMixin, CharField):
     pass
-
-
-class OSMFormMixin(object):
-    def __init__(self, *args, **kwargs):
-        super(OSMFormMixin, self).__init__(*args, **kwargs)
-        if django.VERSION < (1, 9):
-            for k in self.fields:
-                f = self.fields[k]
-                if issubclass(f.__class__, OSMFormField):
-                    f.widget.attrs['prefix'] = self.prefix
