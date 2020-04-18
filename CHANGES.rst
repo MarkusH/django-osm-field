@@ -7,6 +7,11 @@ Changes
 Unreleased
 ==========
 
+0.4.1 (2020-04-18)
+==================
+
+* Internal restructuring and overall package maintenance.
+
 0.4.0 (2020-04-17)
 ==================
 
