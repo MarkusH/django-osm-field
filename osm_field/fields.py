@@ -158,7 +158,10 @@ class OSMField(TextField):
             return [
                 checks.Error(
                     "The OSMField '%s' references the non-existent latitude field '%s'."
-                    % (self.name, self.latitude_field_name,),
+                    % (
+                        self.name,
+                        self.latitude_field_name,
+                    ),
                     hint=None,
                     obj=self,
                     id="osm_field.E001",
@@ -175,7 +178,11 @@ class OSMField(TextField):
             return [
                 checks.Error(
                     "The OSMField '%s' references the non-existent "
-                    "longitude field '%s'." % (self.name, self.longitude_field_name,),
+                    "longitude field '%s'."
+                    % (
+                        self.name,
+                        self.longitude_field_name,
+                    ),
                     hint=None,
                     obj=self,
                     id="osm_field.E002",
