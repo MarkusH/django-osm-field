@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.core import checks
 from django.core.exceptions import FieldDoesNotExist
 from django.db.models.fields import FloatField, TextField
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 
 from .forms import OSMFormField
 from .validators import validate_latitude, validate_longitude
@@ -43,7 +43,7 @@ class Location(object):
         return "<Location lat=%.6f lon=%.6f text=%s>" % (
             self.lat,
             self.lon,
-            force_text(self.text),
+            force_str(self.text),
         )
 
     def __copy__(self):
@@ -158,7 +158,7 @@ class OSMField(TextField):
             return [
                 checks.Error(
                     "The OSMField '%s' references the non-existent latitude field '%s'."
-                    % (self.name, self.latitude_field_name,),
+                    % (self.name, self.latitude_field_name),
                     hint=None,
                     obj=self,
                     id="osm_field.E001",
@@ -175,7 +175,7 @@ class OSMField(TextField):
             return [
                 checks.Error(
                     "The OSMField '%s' references the non-existent "
-                    "longitude field '%s'." % (self.name, self.longitude_field_name,),
+                    "longitude field '%s'." % (self.name, self.longitude_field_name),
                     hint=None,
                     obj=self,
                     id="osm_field.E002",

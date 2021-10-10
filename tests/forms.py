@@ -98,7 +98,10 @@ class ChildModelInlineForm(forms.ModelForm):
 
 
 ChildModelFormset = forms.models.inlineformset_factory(
-    ParentModel, ChildModel, extra=2, form=ChildModelInlineForm,
+    ParentModel,
+    ChildModel,
+    extra=2,
+    form=ChildModelInlineForm,
 )
 
 
