@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.5.0 (2021-10-10)
+
 * Added support for Django 3.1, 3.2, and 4.0 with Python 3.9 and 3.10.
 
 ## 0.4.1 (2020-04-18)
