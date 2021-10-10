@@ -33,6 +33,11 @@ setuptools.setup(
     install_requires=["Django>=2.2"],
     extras_require={
         "dev": ["pre-commit"],
+        "docs": [
+            "Django",
+            "sphinx_rtd_theme",
+            "Sphinx>=3.0,<3.4",
+        ],
         "test": [
             "coverage[toml]>=5,<6",
             "Django",
