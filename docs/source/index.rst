@@ -9,7 +9,6 @@ Contents:
    installation
    usage
    authors
-   changes
    ref/index
 
 
