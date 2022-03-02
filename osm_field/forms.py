@@ -10,7 +10,7 @@ class PrefixedBoundField(BoundField):
         attrs = {} if attrs is None else attrs.copy()
         if self.form.prefix:
             attrs.update({"prefix": self.form.prefix})
-        return super(PrefixedBoundField, self).as_widget(widget, attrs, only_initial)
+        return super().as_widget(widget, attrs, only_initial)
 
 
 class PrefixedFormFieldMixin(object):
