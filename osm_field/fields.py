@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.core import checks
 from django.core.exceptions import FieldDoesNotExist
 from django.db.models.fields import FloatField, TextField
@@ -11,7 +9,7 @@ from .validators import validate_latitude, validate_longitude
 from .widgets import OSMWidget
 
 
-class Location(object):
+class Location:
     """
     A wrapper class bundling the description of a location (``text``) and its
     geo coordinates, latitude (``lat``) and longitude (``lon``).
@@ -75,7 +73,7 @@ class LatitudeField(FloatField):
         kwargs.setdefault("validators", [])
         if validate_latitude not in kwargs["validators"]:
             kwargs["validators"].append(validate_latitude)
-        super(LatitudeField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
         """
@@ -83,7 +81,7 @@ class LatitudeField(FloatField):
             ``min_value`` -90.
         """
         kwargs.update({"max_value": 90, "min_value": -90})
-        return super(LatitudeField, self).formfield(**kwargs)
+        return super().formfield(**kwargs)
 
 
 class LongitudeField(FloatField):
@@ -100,7 +98,7 @@ class LongitudeField(FloatField):
         kwargs.setdefault("validators", [])
         if validate_longitude not in kwargs["validators"]:
             kwargs["validators"].append(validate_longitude)
-        super(LongitudeField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
         """
@@ -108,7 +106,7 @@ class LongitudeField(FloatField):
             ``min_value`` -180.
         """
         kwargs.update({"max_value": 180, "min_value": -180})
-        return super(LongitudeField, self).formfield(**kwargs)
+        return super().formfield(**kwargs)
 
 
 class OSMField(TextField):
@@ -127,7 +125,7 @@ class OSMField(TextField):
         self._lat_field_name = kwargs.pop("lat_field", None)
         self._lon_field_name = kwargs.pop("lon_field", None)
         self.data_field_name = kwargs.pop("data_field", None)
-        super(OSMField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def contribute_to_class(self, cls, name):
         info_name = "get_%s_info" % name
@@ -142,10 +140,10 @@ class OSMField(TextField):
 
             setattr(cls, info_name, _func)
 
-        super(OSMField, self).contribute_to_class(cls, name)
+        super().contribute_to_class(cls, name)
 
     def check(self, **kwargs):
-        errors = super(OSMField, self).check(**kwargs)
+        errors = super().check(**kwargs)
         errors.extend(self._check_latitude_field())
         errors.extend(self._check_longitude_field())
         return errors
@@ -185,7 +183,7 @@ class OSMField(TextField):
             return []
 
     def deconstruct(self):
-        name, path, args, kwargs = super(OSMField, self).deconstruct()
+        name, path, args, kwargs = super().deconstruct()
         kwargs.update(
             {
                 "lat_field": self.latitude_field_name,
@@ -213,7 +211,7 @@ class OSMField(TextField):
         }
         defaults.update(kwargs)
 
-        return super(OSMField, self).formfield(**defaults)
+        return super().formfield(**defaults)
 
     @property
     def latitude_field_name(self):

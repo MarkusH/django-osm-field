@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.conf import settings
 from django.forms.widgets import Media, TextInput
 from django.utils.html import format_html
@@ -9,18 +7,18 @@ from django.utils.html import format_html
 def _get_js(debug=False):
     base = ["js/vendor/leaflet.js"]
     if debug:
-        base.extend(["js/osm_field.js"])
+        base.append("js/osm_field.js")
     else:
-        base.extend(["js/osm_field.min.js"])
+        base.append("js/osm_field.min.js")
     return base
 
 
 def _get_css(debug=False):
     base = ["css/vendor/leaflet.css"]
     if debug:
-        base.extend(["css/osm_field.css"])
+        base.append("css/osm_field.css")
     else:
-        base.extend(["css/osm_field.min.css"])
+        base.append("css/osm_field.min.css")
     return base
 
 
@@ -46,7 +44,7 @@ class OSMWidget(TextInput):
             attrs["class"] += " osmfield"
         else:
             attrs["class"] = "osmfield"
-        super(OSMWidget, self).__init__(attrs=attrs)
+        super().__init__(attrs=attrs)
 
     def render(self, name, value, attrs=None, renderer=None):
         attrs = {} if attrs is None else attrs.copy()
@@ -69,7 +67,7 @@ class OSMWidget(TextInput):
                 attrs["data-data-field"] = "{}-{}".format(
                     prefix, attrs.get("data-data-field", self.attrs["data-data-field"])
                 )
-        ret = super(OSMWidget, self).render(name, value, attrs=attrs)
+        ret = super().render(name, value, attrs=attrs)
         id_ = attrs["id"]
         ret += self.render_osmfield(id_)
         return ret
