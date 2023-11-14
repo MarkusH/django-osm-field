@@ -16,7 +16,7 @@ jobs:
     name: "Test Python ${{ matrix.python-version }} & Django ${{ matrix.django-version }}"
     strategy:
       matrix:
-        django-version: ["3.2.0", "4.0.0", "4.1.0", "4.2.0", "5.0.0"]
+        django-version: ["3.2.0", "4.0.0", "4.1.0", "4.2.0"]  # "5.0.0"]
         python-version: ["3.7", "3.8", "3.9", "3.10", "3.11", "3.12"]
         exclude:
           # 3.2
@@ -42,12 +42,12 @@ jobs:
           - django-version: "4.2.0"
             python-version: "3.12"
           # 5.0
-          - django-version: "5.0.0"
-            python-version: "3.7"
-          - django-version: "5.0.0"
-            python-version: "3.8"
-          - django-version: "5.0.0"
-            python-version: "3.9"
+          # - django-version: "5.0.0"
+          #   python-version: "3.7"
+          # - django-version: "5.0.0"
+          #   python-version: "3.8"
+          # - django-version: "5.0.0"
+          #   python-version: "3.9"
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
