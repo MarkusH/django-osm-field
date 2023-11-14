@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
-import os.path
-
-import django
+from pathlib import Path
 
 DEBUG = False
 
-RUNTESTS_DIR = os.path.abspath(os.path.dirname(__file__))
+RUNTESTS_DIR = Path(__file__).parent.resolve()
 
 DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3"}}
 
@@ -45,5 +43,4 @@ TEMPLATES = [
 
 ROOT_URLCONF = "tests.urls"
 
-if django.VERSION[:2] < (1, 6):
-    TEST_RUNNER = "discover_runner.DiscoverRunner"
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"

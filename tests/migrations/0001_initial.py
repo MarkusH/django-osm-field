@@ -8,7 +8,6 @@ import osm_field.validators
 
 
 class Migration(migrations.Migration):
-
     dependencies = []
 
     operations = [
