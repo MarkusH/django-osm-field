@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import re
 
 import django
 from django.test import SimpleTestCase
@@ -143,32 +144,46 @@ class TestWidget(SimpleTestCase):
 
 
 class TestMedia(SimpleTestCase):
+    @classmethod
+    def tearDownClass(cls):  # Needed for Django <4.1
+        ...
+
+    @classmethod
+    def setUpClass(cls):
+        cls.css_leaflet_snippet = (
+            '<link href="css/vendor/leaflet.css" type="text/css" media="screen" '
+            'rel="stylesheet"'
+        )
+        cls.css_osmf_snippet = (
+            '<link href="css/osm_field.css" type="text/css" media="screen" '
+            'rel="stylesheet"'
+        )
+        cls.css_min_osmf_snippet = (
+            '<link href="css/osm_field.min.css" type="text/css" media="screen" '
+            'rel="stylesheet"'
+        )
+        # Remove ' type="text/css"' for Django 4.1+, see here:
+        # https://docs.djangoproject.com/en/4.2/releases/4.1/#miscellaneous
+        if django.VERSION >= (4, 1):
+            for attr in (
+                "css_leaflet_snippet",
+                "css_osmf_snippet",
+                "css_min_osmf_snippet",
+            ):
+                setattr(
+                    cls, attr, re.sub(r'\s+type="text/css"', "", getattr(cls, attr))
+                )
+
     @override_settings(DEBUG=True)
     def test_css_debug(self):
         css = DefaultNamingForm().media.render_css()
-        self.assertIn(
-            '<link href="css/vendor/leaflet.css" type="text/css" media="screen" '
-            'rel="stylesheet"',
-            next(css),
-        )
-        self.assertIn(
-            '<link href="css/osm_field.css" type="text/css" media="screen" '
-            'rel="stylesheet"',
-            next(css),
-        )
+        self.assertIn(self.css_leaflet_snippet, next(css))
+        self.assertIn(self.css_osmf_snippet, next(css))
 
     def test_css_no_debug(self):
         css = DefaultNamingForm().media.render_css()
-        self.assertIn(
-            '<link href="css/vendor/leaflet.css" type="text/css" media="screen" '
-            'rel="stylesheet"',
-            next(css),
-        )
-        self.assertIn(
-            '<link href="css/osm_field.min.css" type="text/css" media="screen" '
-            'rel="stylesheet"',
-            next(css),
-        )
+        self.assertIn(self.css_leaflet_snippet, next(css))
+        self.assertIn(self.css_min_osmf_snippet, next(css))
 
     @override_settings(DEBUG=True)
     def test_js_debug(self):
