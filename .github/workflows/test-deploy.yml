@@ -88,12 +88,12 @@ jobs:
     runs-on: ubuntu-latest
     needs: [test]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
-          python-version: "3.9"
-      - uses: actions/cache@v2
+          python-version: "3.10"
+      - uses: actions/cache@v3
         name: Configure pip caching
         with:
           path: ~/.cache/pip
