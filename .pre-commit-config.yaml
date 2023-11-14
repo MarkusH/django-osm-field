@@ -10,6 +10,7 @@ repos:
   - id: check-vcs-permalinks
   - id: debug-statements
   - id: trailing-whitespace
+  - id: end-of-file-fixer
   - id: mixed-line-ending
   - id: no-commit-to-branch
 - repo: https://github.com/astral-sh/ruff-pre-commit
