@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-import os.path
+from pathlib import Path
 
 DEBUG = False
 
-RUNTESTS_DIR = os.path.abspath(os.path.dirname(__file__))
+RUNTESTS_DIR = Path(__file__).parent.resolve()
 
 DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3"}}
 
