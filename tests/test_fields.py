@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
+from __future__ import annotations
 
 import copy
-from unittest import skipIf
 
-import django
+from django.core.checks import Error
 from django.db import models
 from django.test import SimpleTestCase, TestCase
 
@@ -16,15 +15,11 @@ from .models import (
     DefaultNamingModel,
     MixedNamingModel,
     MultipleNamingModel,
+    NoGetFOOInfoMethodModel,
 )
 
-try:
-    from django.core.checks import Error
-except ImportError:
-    pass
 
-
-def foo_validator(value):
+def foo_validator(value):  # pragma: no cover
     pass
 
 
@@ -32,11 +27,7 @@ BERLIN = Location(lat=52.5167, lon=13.3830, text="Berlin")
 NEW_YORK = Location(lat=40.7127, lon=-74.005, text="New York")
 
 
-@skipIf(
-    django.VERSION[:2] < (1, 7),
-    "Model field deconstruction has been introduced in Django 1.7",
-)
-class TestDeconstruction(TestCase):
+class TestDeconstruction(SimpleTestCase):
     def test_latitude_field(self):
         field = LatitudeField()
         name, path, args, kwargs = field.deconstruct()
@@ -150,7 +141,7 @@ class TestFieldChecks(TestCase):
         checks.extend(field.check())
         self.assertEqual(checks, expected)
 
-    def test_no_missing_fields_exclicitly_given(self):
+    def test_no_missing_fields_explicitly_given(self):
         class Model(models.Model):
             location = OSMField(lat_field="latitude", lon_field="longitude")
             latitude = LatitudeField()
@@ -162,7 +153,7 @@ class TestFieldChecks(TestCase):
         checks.extend(field.check())
         self.assertEqual(checks, expected)
 
-    def test_missing_fields_exclicitly_given(self):
+    def test_missing_fields_explicitly_given(self):
         class Model(models.Model):
             location = OSMField(lat_field="lat", lon_field="lon")
 
@@ -188,7 +179,7 @@ class TestFieldChecks(TestCase):
         self.assertEqual(checks, expected)
 
 
-class TestFormFields(TestCase):
+class TestFormFields(SimpleTestCase):
     def test_latitude_field(self):
         field = LatitudeField()
         field.set_attributes_from_name("location_lat")
@@ -268,6 +259,10 @@ class TestModels(TestCase):
         self.assertNotEqual(item.get_default_location_info(), NEW_YORK)
         self.assertNotEqual(item.get_custom_location_info(), BERLIN)
 
+    def test_contribute_to_class_skips_existing_get_FOO_info_attribute(self):
+        item = NoGetFOOInfoMethodModel()
+        self.assertEqual(item.get_location_info(), 42)
+
 
 class TestLocation(SimpleTestCase):
     def test_compare(self):
@@ -288,5 +283,9 @@ class TestLocation(SimpleTestCase):
         )
 
     def test_string(self):
+        self.assertEqual("Berlin", str(Location(lat=None, lon=None, text="Berlin")))
+        self.assertEqual(
+            "(52.516700, 13.383000)", str(Location(lat=52.5167, lon=13.3830, text=None))
+        )
         self.assertEqual("Berlin (52.516700, 13.383000)", str(BERLIN))
         self.assertEqual("New York (40.712700, -74.005000)", str(NEW_YORK))

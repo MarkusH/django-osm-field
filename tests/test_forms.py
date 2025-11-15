@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
+from __future__ import annotations
 
-import django
 from django.test import SimpleTestCase
 from django.test.utils import override_settings
 
@@ -141,62 +140,60 @@ class TestWidget(SimpleTestCase):
             html,
         )
 
+    def test_widget_location_data_field_with_prefix(self):
+        html = WithDataForm(prefix="foo").as_p()
+        self.assertIn('name="foo-location"', html)
+        self.assertIn('data-lat-field="foo-latitude"', html)
+        self.assertIn('data-lon-field="foo-longitude"', html)
+        self.assertIn('data-data-field="foo-location_data"', html)
+        self.assertIn('name="foo-latitude"', html)
+        self.assertIn('name="foo-longitude"', html)
+        self.assertIn('name="foo-location_data"', html)
+        self.assertIn(
+            '<script type="application/javascript">'
+            '$(function(){$("#id_foo-location").osmfield();});'
+            "</script>",
+            html,
+        )
+
 
 class TestMedia(SimpleTestCase):
     @override_settings(DEBUG=True)
     def test_css_debug(self):
         css = DefaultNamingForm().media.render_css()
         self.assertIn(
-            '<link href="css/vendor/leaflet.css" type="text/css" media="screen" '
-            'rel="stylesheet"',
+            '<link href="css/vendor/leaflet.css" media="screen" rel="stylesheet"',
             next(css),
         )
         self.assertIn(
-            '<link href="css/osm_field.css" type="text/css" media="screen" '
-            'rel="stylesheet"',
+            '<link href="css/osm_field.css" media="screen" rel="stylesheet"',
             next(css),
         )
 
     def test_css_no_debug(self):
         css = DefaultNamingForm().media.render_css()
         self.assertIn(
-            '<link href="css/vendor/leaflet.css" type="text/css" media="screen" '
-            'rel="stylesheet"',
+            '<link href="css/vendor/leaflet.css" media="screen" rel="stylesheet"',
             next(css),
         )
         self.assertIn(
-            '<link href="css/osm_field.min.css" type="text/css" media="screen" '
-            'rel="stylesheet"',
+            '<link href="css/osm_field.min.css" media="screen" rel="stylesheet"',
             next(css),
         )
 
     @override_settings(DEBUG=True)
     def test_js_debug(self):
         js = DefaultNamingForm().media.render_js()
-        if django.VERSION[:2] >= (3, 1):
-            self.assertEqual(
-                '<script src="js/vendor/leaflet.js"></script>'
-                '<script src="js/osm_field.js"></script>',
-                "".join(js),
-            )
-        else:
-            self.assertEqual(
-                '<script type="text/javascript" src="js/vendor/leaflet.js"></script>'
-                '<script type="text/javascript" src="js/osm_field.js"></script>',
-                "".join(js),
-            )
+        self.assertEqual(
+            '<script src="js/vendor/leaflet.js"></script>'
+            '<script src="js/osm_field.js"></script>',
+            "".join(js),
+        )
 
     def test_js_no_debug(self):
         js = DefaultNamingForm().media.render_js()
-        if django.VERSION[:2] >= (3, 1):
-            self.assertEqual(
-                '<script src="js/vendor/leaflet.js"></script>'
-                '<script src="js/osm_field.min.js"></script>',
-                "".join(js),
-            )
-        else:
-            self.assertEqual(
-                '<script type="text/javascript" src="js/vendor/leaflet.js"></script>'
-                '<script type="text/javascript" src="js/osm_field.min.js"></script>',
-                "".join(js),
-            )
+        self.assertEqual(
+            '<script src="js/vendor/leaflet.js"></script>'
+            '<script src="js/osm_field.min.js"></script>',
+            "".join(js),
+        )

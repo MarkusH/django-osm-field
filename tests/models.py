@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from django.db import models
 
 from osm_field.fields import LatitudeField, LongitudeField, OSMField
@@ -53,3 +55,12 @@ class ChildModel(models.Model):
     location = OSMField()
     location_lat = LatitudeField()
     location_lon = LongitudeField()
+
+
+class NoGetFOOInfoMethodModel(models.Model):
+    location = OSMField(lat_field="latitude", lon_field="longitude")
+    latitude = LatitudeField()
+    longitude = LongitudeField()
+
+    def get_location_info(self):
+        return 42

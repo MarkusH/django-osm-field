@@ -8,7 +8,6 @@ Contents:
 
    installation
    usage
-   authors
    ref/index
 
 

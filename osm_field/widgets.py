@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+from __future__ import annotations
 
 from django.conf import settings
 from django.forms.widgets import Media, TextInput
@@ -46,7 +45,7 @@ class OSMWidget(TextInput):
             attrs["class"] += " osmfield"
         else:
             attrs["class"] = "osmfield"
-        super(OSMWidget, self).__init__(attrs=attrs)
+        super().__init__(attrs=attrs)
 
     def render(self, name, value, attrs=None, renderer=None):
         attrs = {} if attrs is None else attrs.copy()
@@ -69,7 +68,7 @@ class OSMWidget(TextInput):
                 attrs["data-data-field"] = "{}-{}".format(
                     prefix, attrs.get("data-data-field", self.attrs["data-data-field"])
                 )
-        ret = super(OSMWidget, self).render(name, value, attrs=attrs)
+        ret = super().render(name, value, attrs=attrs)
         id_ = attrs["id"]
         ret += self.render_osmfield(id_)
         return ret

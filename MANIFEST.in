@@ -1,5 +1,9 @@
+prune tests
 include AUTHORS.rst
-include CHANGES.rst
+include CHANGELOG.md
 include LICENSE
+include pyproject.toml
+include README.rst
+include src/*/py.typed
 recursive-include osm_field/static/css *.*
 recursive-include osm_field/static/js *.*

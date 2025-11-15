@@ -1,9 +1,10 @@
 #!/usr/bin/env python
+from __future__ import annotations
+
 import os
 import sys
+from importlib.metadata import version as get_version
 from os.path import abspath, dirname, join
-
-from pkg_resources import get_distribution
 
 os.environ["DJANGO_SETTINGS_MODULE"] = "example.settings"
 
@@ -14,7 +15,7 @@ sys.path.insert(0, abspath(join(dirname(__file__), "..", "..")))
 
 project = "django-osm-field"
 copyright = "2014, Markus Holtermann, et al"
-version = release = get_distribution("django-osm-field").version
+version = release = get_version("django-osm-field")
 
 extensions = ["sphinx.ext.autodoc", "sphinx.ext.intersphinx"]
 exclude_patterns = ["build"]

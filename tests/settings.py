@@ -1,11 +1,12 @@
-# -*- coding: utf-8 -*-
+from __future__ import annotations
+
 from pathlib import Path
 
 DEBUG = False
 
 RUNTESTS_DIR = Path(__file__).parent.resolve()
 
-DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3"}}
+DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"}}
 
 INSTALLED_APPS = (
     "django.contrib.auth",
@@ -13,6 +14,7 @@ INSTALLED_APPS = (
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.admin",
+    "osm_field",
     "tests",
 )
 
@@ -41,6 +43,6 @@ TEMPLATES = [
     },
 ]
 
-ROOT_URLCONF = "tests.urls"
+USE_TZ = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"

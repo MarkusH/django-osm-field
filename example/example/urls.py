@@ -1,4 +1,6 @@
 # from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from __future__ import annotations
+
 from django.urls import path
 
 from .views import create_view, delete_view, detail_view, list_view, update_view

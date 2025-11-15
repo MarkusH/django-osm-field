@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from django.forms import BoundField, CharField
 
 
@@ -10,10 +12,10 @@ class PrefixedBoundField(BoundField):
         attrs = {} if attrs is None else attrs.copy()
         if self.form.prefix:
             attrs.update({"prefix": self.form.prefix})
-        return super(PrefixedBoundField, self).as_widget(widget, attrs, only_initial)
+        return super().as_widget(widget, attrs, only_initial)
 
 
-class PrefixedFormFieldMixin(object):
+class PrefixedFormFieldMixin:
     """
     A form field that binds to a custom bound field class, so we can pass the
     form's prefix into the widget's attrs

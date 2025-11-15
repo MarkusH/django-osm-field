@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+from __future__ import annotations
 
 from django.core import checks
 from django.core.exceptions import FieldDoesNotExist
@@ -11,7 +10,7 @@ from .validators import validate_latitude, validate_longitude
 from .widgets import OSMWidget
 
 
-class Location(object):
+class Location:
     """
     A wrapper class bundling the description of a location (``text``) and its
     geo coordinates, latitude (``lat``) and longitude (``lon``).
@@ -36,15 +35,11 @@ class Location(object):
         if self.text is not None:
             out.append(self.text)
         if self.lat is not None and self.lon is not None:
-            out.append("(%.6f, %.6f)" % (self.lat, self.lon))
+            out.append(f"({self.lat:.6f}, {self.lon:.6f})")
         return " ".join(out)
 
     def __repr__(self):
-        return "<Location lat=%.6f lon=%.6f text=%s>" % (
-            self.lat,
-            self.lon,
-            force_str(self.text),
-        )
+        return f"<Location lat={self.lat:.6f} lon={self.lon:.6f} text={force_str(self.text)}>"
 
     def __copy__(self):
         return self.__class__(self.lat, self.lon, self.text)
@@ -75,7 +70,7 @@ class LatitudeField(FloatField):
         kwargs.setdefault("validators", [])
         if validate_latitude not in kwargs["validators"]:
             kwargs["validators"].append(validate_latitude)
-        super(LatitudeField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
         """
@@ -83,7 +78,7 @@ class LatitudeField(FloatField):
             ``min_value`` -90.
         """
         kwargs.update({"max_value": 90, "min_value": -90})
-        return super(LatitudeField, self).formfield(**kwargs)
+        return super().formfield(**kwargs)
 
 
 class LongitudeField(FloatField):
@@ -100,7 +95,7 @@ class LongitudeField(FloatField):
         kwargs.setdefault("validators", [])
         if validate_longitude not in kwargs["validators"]:
             kwargs["validators"].append(validate_longitude)
-        super(LongitudeField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
         """
@@ -108,7 +103,7 @@ class LongitudeField(FloatField):
             ``min_value`` -180.
         """
         kwargs.update({"max_value": 180, "min_value": -180})
-        return super(LongitudeField, self).formfield(**kwargs)
+        return super().formfield(**kwargs)
 
 
 class OSMField(TextField):
@@ -127,10 +122,10 @@ class OSMField(TextField):
         self._lat_field_name = kwargs.pop("lat_field", None)
         self._lon_field_name = kwargs.pop("lon_field", None)
         self.data_field_name = kwargs.pop("data_field", None)
-        super(OSMField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def contribute_to_class(self, cls, name):
-        info_name = "get_%s_info" % name
+        info_name = f"get_{name}_info"
         if not hasattr(cls, info_name):
 
             def _func(obj):
@@ -142,10 +137,10 @@ class OSMField(TextField):
 
             setattr(cls, info_name, _func)
 
-        super(OSMField, self).contribute_to_class(cls, name)
+        super().contribute_to_class(cls, name)
 
     def check(self, **kwargs):
-        errors = super(OSMField, self).check(**kwargs)
+        errors = super().check(**kwargs)
         errors.extend(self._check_latitude_field())
         errors.extend(self._check_longitude_field())
         return errors
@@ -157,8 +152,7 @@ class OSMField(TextField):
         except FieldDoesNotExist:
             return [
                 checks.Error(
-                    "The OSMField '%s' references the non-existent latitude field '%s'."
-                    % (self.name, self.latitude_field_name),
+                    f"The OSMField '{self.name}' references the non-existent latitude field '{self.latitude_field_name}'.",
                     hint=None,
                     obj=self,
                     id="osm_field.E001",
@@ -174,8 +168,8 @@ class OSMField(TextField):
         except FieldDoesNotExist:
             return [
                 checks.Error(
-                    "The OSMField '%s' references the non-existent "
-                    "longitude field '%s'." % (self.name, self.longitude_field_name),
+                    f"The OSMField '{self.name}' references the non-existent "
+                    f"longitude field '{self.longitude_field_name}'.",
                     hint=None,
                     obj=self,
                     id="osm_field.E002",
@@ -185,7 +179,7 @@ class OSMField(TextField):
             return []
 
     def deconstruct(self):
-        name, path, args, kwargs = super(OSMField, self).deconstruct()
+        name, path, args, kwargs = super().deconstruct()
         kwargs.update(
             {
                 "lat_field": self.latitude_field_name,
@@ -213,7 +207,7 @@ class OSMField(TextField):
         }
         defaults.update(kwargs)
 
-        return super(OSMField, self).formfield(**defaults)
+        return super().formfield(**defaults)
 
     @property
     def latitude_field_name(self):

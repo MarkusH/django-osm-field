@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+* Major update to formally supported versions:
+
+  - Python: 3.9, 3.10, 3.11, 3.12, 3.13, 3.14
+  - Django 4.2, 5.0, 5.1, 5.2, and 6.0
+
+* Updated to bundled jQuery file from 2.1.0 to 3.5.0.
+
 ## 0.5.0 (2021-10-10)
 
 * Added support for Django 3.1, 3.2, and 4.0 with Python 3.9 and 3.10.

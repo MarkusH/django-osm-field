@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from django import forms
 
 from osm_field.widgets import OSMWidget
