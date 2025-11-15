@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.6.0 (2025-11-16)
+
 * Major update to formally supported versions:
 
   - Python: 3.9, 3.10, 3.11, 3.12, 3.13, 3.14

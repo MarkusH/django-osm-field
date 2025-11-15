@@ -6,7 +6,7 @@ requires = [
 
 [project]
 name = "django-osm-field"
-version = "0.5.0"
+version = "0.6.0"
 description = "Django OpenStreetMap Field"
 readme = "README.rst"
 keywords = [
