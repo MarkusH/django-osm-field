@@ -28,7 +28,7 @@ jobs:
         - '3.14'
 
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
     - uses: actions/setup-python@v6
       with:
@@ -44,7 +44,7 @@ jobs:
       run: uvx --with tox-uv tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)
 
     - name: Upload coverage data
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: coverage-data-${{ matrix.python-version }}
         path: '${{ github.workspace }}/.coverage.*'
@@ -56,7 +56,7 @@ jobs:
     runs-on: ubuntu-24.04
     needs: tests
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
     - uses: actions/setup-python@v6
       with:
@@ -69,7 +69,7 @@ jobs:
       run: uv pip install --system coverage[toml]
 
     - name: Download data
-      uses: actions/download-artifact@v6
+      uses: actions/download-artifact@v7
       with:
         path: ${{ github.workspace }}
         pattern: coverage-data-*
@@ -85,7 +85,7 @@ jobs:
 
     - name: Upload HTML report
       if: ${{ failure() }}
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: html-report
         path: htmlcov
@@ -101,7 +101,7 @@ jobs:
       id-token: write
 
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
     - uses: astral-sh/setup-uv@v7
 
