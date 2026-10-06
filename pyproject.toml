@@ -70,6 +70,17 @@ django51 = [ "django>=5.1a1,<5.2; python_version>='3.10'" ]
 django52 = [ "django>=5.2a1,<6; python_version>='3.10'" ]
 django60 = [ "django>=6a1,<6.1; python_version>='3.12'" ]
 
+[tool.uv]
+conflicts = [
+  [
+    { group = "django42" },
+    { group = "django50" },
+    { group = "django51" },
+    { group = "django52" },
+    { group = "django60" },
+  ],
+]
+
 [tool.ruff]
 lint.select = [
   # flake8-bugbear
@@ -110,60 +121,42 @@ lint.isort.required-imports = [ "from __future__ import annotations" ]
 [tool.pyproject-fmt]
 max_supported_python = "3.14"
 
-[tool.pytest.ini_options]
-addopts = """\
-    --strict-config
-    --strict-markers
-    --ds=tests.settings
-    """
-django_find_project = false
-xfail_strict = true
-
-[tool.coverage.run]
-branch = true
-parallel = true
-source = [
-  "osm_field",
-  "tests",
-]
-
-[tool.coverage.paths]
-source = [
-  "src",
-  ".tox/**/site-packages",
-]
-
-[tool.coverage.report]
-show_missing = true
-
 [tool.mypy]
+mypy_path = "src/"
+namespace_packages = false
+warn_unreachable = true
 enable_error_code = [
   "ignore-without-code",
   "redundant-expr",
   "truthy-bool",
 ]
-mypy_path = "src/"
-namespace_packages = false
 strict = true
-warn_unreachable = true
+overrides = [ { module = "tests.*", allow_untyped_defs = true } ]
 
-[[tool.mypy.overrides]]
-module = "tests.*"
-allow_untyped_defs = true
+[tool.pytest]
+ini_options.addopts = """\
+    --strict-config
+    --strict-markers
+    --ds=tests.settings
+    """
+ini_options.xfail_strict = true
+ini_options.django_find_project = false
+
+[tool.coverage]
+run.source = [
+  "osm_field",
+  "tests",
+]
+run.branch = true
+run.parallel = true
+paths.source = [
+  "src",
+  ".tox/**/site-packages",
+]
+report.show_missing = true
 
 [tool.rstcheck]
 report_level = "ERROR"
 ignore_directives = [
   "automodule", # Not loaded by rstcheck
-]
-
-[tool.uv]
-conflicts = [
-  [
-    { group = "django42" },
-    { group = "django50" },
-    { group = "django51" },
-    { group = "django52" },
-    { group = "django60" },
-  ],
 ]
