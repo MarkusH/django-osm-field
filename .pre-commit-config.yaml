@@ -18,24 +18,24 @@ repos:
   - id: end-of-file-fixer
   - id: trailing-whitespace
 - repo: https://github.com/crate-ci/typos
-  rev: 1976b238f2710646b971e06bc25737249ee6406d # frozen: v1
+  rev: dd369349b73c245acd4dd4154a4bdf771d052150  # frozen: typos-dict-v0.14.2
   hooks:
   - id: typos
 - repo: https://github.com/tox-dev/pyproject-fmt
-  rev: 8a22e281b3f6d1bb298aaabfc165a943a943882c # frozen: v2.7.0
+  rev: a72ae8edd6eeddb9d942168912362945651212f8  # frozen: v2.30.1
   hooks:
   - id: pyproject-fmt
 - repo: https://github.com/tox-dev/tox-ini-fmt
-  rev: 4e2cb0e98735e1a57a027d9440b91663e31d10b0 # frozen: 1.6.0
+  rev: 241ced4140307006cfd8b2b9ccfd43b1139cfe4a  # frozen: 1.9.0
   hooks:
   - id: tox-ini-fmt
 - repo: https://github.com/rstcheck/rstcheck
-  rev: 27258fde1ee7d3b1e6a7bbc58f4c7b1dd0e719e5 # frozen: v6.2.5
+  rev: 27a8027d6c6df787891a01b76e8298bac493fb58  # frozen: v6.3.0
   hooks:
   - id: rstcheck
     additional_dependencies: ['rstcheck[sphinx,toml]']
 - repo: https://github.com/adamchainz/django-upgrade
-  rev: c03f1b1e703cd967c5fd94e29c61f111e8b0eaf0 # frozen: 1.29.0
+  rev: 5a815b88d9286ba45b8c1a4b56e695ff5645c65e  # frozen: 1.33.0
   hooks:
   - id: django-upgrade
 - repo: https://github.com/adamchainz/blacken-docs
@@ -45,7 +45,7 @@ repos:
     additional_dependencies:
     - black==25.1.0
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: 9c89adb347f6b973f4905a4be0051eb2ecf85dea # frozen: v0.13.3
+  rev: f12be1ebaa5351c1fc76472de98db2c3446c8253  # frozen: v0.16.10
   hooks:
   - id: ruff-check
     args: [--fix]
